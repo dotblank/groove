@@ -1,0 +1,13 @@
+Source: groove
+Section: unknown
+Priority: extra
+Maintainer: Elias Woods <EliasWoods@gmail.com>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+Homepage: None Yet
+
+Package: groove
+Architecture: amd64
+Depends: libqjson0, libqt4-gui, libqt4-core, libqt4-network, libqt4-phonon, phonon, phonon-backend-gstreamer, ${shlibs:Depends}, ${misc:Depends}
+Description: Groove - A grooveshark client for linux
+ A grooveshark client written qt4
