@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("Groove");
-    groove gs;
+    groove gs; //create Groove!
 #if defined(Q_WS_S60)
     gs.showMaximized();
 #else
