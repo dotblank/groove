@@ -73,6 +73,11 @@ void sPlayer::start()
         media->play();
     }*/
 }
+void sPlayer::stop()
+{
+    media->stop();
+}
+
 void sPlayer::putb(qint64 b, qint64 t)
 {
     //qDebug() << "Download: " << b << "Total: " << t;

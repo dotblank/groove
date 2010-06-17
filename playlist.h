@@ -12,6 +12,7 @@ public:
     void addSong(QStandardItem item);
     QList<QStandardItem *> getPlaylist();
     void removeSong(int position);
+    void getSong(int position);
 
 
 signals:

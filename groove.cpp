@@ -66,6 +66,7 @@ groove::groove(QWidget *parent) :
     connect(lineEdit,SIGNAL(returnPressed()),this, SLOT(search()));
     connect(pushMenu,SIGNAL(triggered(QAction*)),this,SLOT(changeS(QAction*)));
     connect(dButton,SIGNAL(clicked()),this, SLOT(play()));
+    connect(stopButton,SIGNAL(clicked()),this,SLOT(stop()));
     connect(gs,SIGNAL(sKeyFound()),this,SLOT(startP()));
 }
 void groove::search()
@@ -135,4 +136,8 @@ void groove::startP()
     player = new sPlayer();
     player->play(gs->streamID,gs->sku);
 
+}
+void groove::stop()
+{
+    player->stop();
 }

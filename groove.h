@@ -19,6 +19,7 @@ public slots:
     void changeS( QAction * action);
     void play();
     void startP();
+    void stop();
 
 private:
     sPlayer *player;
