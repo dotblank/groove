@@ -12,16 +12,19 @@ groove::groove(QWidget *parent) :
     player = new sPlayer();
     QHBoxLayout *layout = new QHBoxLayout();
     QVBoxLayout *vlayout = new QVBoxLayout();
+    QHBoxLayout *bottomLayout = new QHBoxLayout();
     button = new QPushButton("Search");
     QPushButton *dButton = new QPushButton("Play");
+    QPushButton *stopButton = new QPushButton("Stop");
+    QPushButton *moreButton = new QPushButton();
     resultView = new QTableView();
     QMenu *pushMenu = new QMenu();
     //showFullScreen();
     lineEdit->insert("");
     lineEdit->setDisabled(true);
     pushMenu->addAction("Song:");
-    pushMenu->addAction("Artist:");
-    pushMenu->addAction("Album:");
+    //pushMenu->addAction("Artist:");
+    //pushMenu->addAction("Album:");
 
     //sMethod->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
     sMethod->setMaximumWidth(sMethod->sizeHint().rwidth());
@@ -37,14 +40,21 @@ groove::groove(QWidget *parent) :
     resultView->setSelectionMode(QAbstractItemView::SingleSelection);
     resultView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     resultView->setColumnHidden(2,true);
+    resultView->setColumnHidden(3,true);
     resultView->setAutoScroll(false);
+    /*QPalette pal = resultView->palette();
+    pal.setBrush(QPalette::Highlight,QBrush(Qt::transparent,Qt::NoBrush));
+    resultView->setPalette(pal);*/
 
     layout->addWidget(sMethod);
     layout->addWidget(lineEdit);
     layout->addWidget(button);
     vlayout->addLayout(layout);
     vlayout->addWidget(resultView);
-    vlayout->addWidget(dButton);
+    vlayout->addLayout(bottomLayout);
+    bottomLayout->addWidget(dButton);
+    bottomLayout->addWidget(stopButton);
+    bottomLayout->addWidget(moreButton);
     vlayout->setMenuBar(mBar);
     setLayout(vlayout);
     setWindowTitle("GrooveShark");

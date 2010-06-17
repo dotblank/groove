@@ -19,6 +19,7 @@ gscom::gscom()
     model->setHorizontalHeaderLabels(
         QStringList() << "Online");
     addDebugMsg("You may now search for a song");
+    addProgressbar("test");
     //getSessionKey();
 }
 
@@ -257,6 +258,28 @@ void gscom::addDebugMsg(QString debug)
         QList<QStandardItem *> items;
         foreach (QString text, row)
             items.append(new QStandardItem(text));
+        model->appendRow(items);
+    }
+    return;
+}
+void gscom::addProgressbar(QString debug)
+{
+    QList<QStringList> rows = QList<QStringList>()
+        << (QStringList() << debug);
+    foreach (QStringList row, rows) {
+        QList<QStandardItem *> items;
+        foreach (QString text, row)
+        {
+            QLinearGradient gradient(0,0,250,0);
+            gradient.setColorAt(0, QColor::fromRgbF(0, 1, 0, 1));
+            gradient.setColorAt(0.9, QColor::fromRgbF(0, 1, 0, 1));
+            gradient.setColorAt(1, QColor::fromRgbF(0, 0, 0, 0));
+            QBrush brush(gradient);
+            QStandardItem *pBar = new QStandardItem(text);
+            pBar->setBackground(brush);
+            pBar->setSelectable(false);
+            items.append(pBar);
+        }
         model->appendRow(items);
     }
     return;

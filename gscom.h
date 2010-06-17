@@ -49,6 +49,7 @@ private:
     QNetworkAccessManager *manager;
     QNetworkCookieJar *cookies;
     void addDebugMsg(QString debug);
+    void addProgressbar(QString debug);
     bool firstR;
     QByteArray *postdata;
 };

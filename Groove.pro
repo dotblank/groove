@@ -25,10 +25,12 @@ SOURCES += main.cpp \
     groove.cpp \
     gscom.cpp \
     splayer.cpp \
-    streamio.cpp
+    streamio.cpp \
+    playlist.cpp
 
 HEADERS += \
     groove.h \
     gscom.h \
     splayer.h \
-    streamio.h
+    streamio.h \
+    playlist.h
