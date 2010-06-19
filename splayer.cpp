@@ -20,6 +20,10 @@ sPlayer::~sPlayer()
     buffer->~QBuffer();
     media->~MediaNode();
 }
+void sPlayer::abortDownload()
+{
+    reply->abort();
+}
 
 void sPlayer::play(QString StreamKey,QUrl server)
 {
@@ -27,7 +31,11 @@ void sPlayer::play(QString StreamKey,QUrl server)
     {
         //reply->abort();
     }
-
+    pd = new QProgressDialog("Downloading / Buffering.", "Cancel", 0, 100);
+    pd->setValue(0);
+#ifdef Q_WS_MAEMO_5
+    pd->setAttribute(Qt::WA_Maemo5AutoOrientation,true);
+#endif
     QNetworkRequest req;
     req.setUrl(server);
     qDebug() << server;
@@ -36,6 +44,7 @@ void sPlayer::play(QString StreamKey,QUrl server)
     buffer->open(buffer->ReadWrite | buffer->Truncate);
     connect(reply,SIGNAL(finished()),this,SLOT(start()));
     connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(putb(qint64,qint64)));
+    connect(pd,SIGNAL(canceled()),this,SLOT(abortDownload()));
     media->stop();
     playing = false;
     startStreamT = QTime::currentTime();
@@ -101,6 +110,9 @@ void sPlayer::putb(qint64 b, qint64 t)
     }
     else
     {
+        if(pd->maximum() != t)
+            pd->setMaximum(t);
+        pd->setValue(b);
 
         buffer->buffer().append(reply->readAll());
         //qDebug() << buffer->bytesAvailable();
@@ -120,8 +132,9 @@ void sPlayer::putb(qint64 b, qint64 t)
         buffer->seek(last);
         //buffer->data().append(reply->readAll());*/
         //qDebug() << "Download speed (KB/S): " << b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024;
-        if ( b >= t*0.05 && !playing && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 35)
+        if ( b >= t*0.05 && !playing && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 25)
         {
+            pd->hide();
             playing = true;
             //Start playback at 25% download
             media->setCurrentSource(Phonon::MediaSource(buffer));

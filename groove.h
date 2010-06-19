@@ -20,6 +20,7 @@ public slots:
     void play();
     void startP();
     void stop();
+    void moreB();
 
 private:
     sPlayer *player;

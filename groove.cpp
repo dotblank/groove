@@ -16,7 +16,7 @@ groove::groove(QWidget *parent) :
     button = new QPushButton("Search");
     QPushButton *dButton = new QPushButton("Play");
     QPushButton *stopButton = new QPushButton("Stop");
-    QPushButton *moreButton = new QPushButton();
+    QPushButton *moreButton = new QPushButton("...");
     resultView = new QTableView();
     QMenu *pushMenu = new QMenu();
     //showFullScreen();
@@ -25,6 +25,12 @@ groove::groove(QWidget *parent) :
     pushMenu->addAction("Song:");
     //pushMenu->addAction("Artist:");
     //pushMenu->addAction("Album:");
+
+    QMenu *moreAction = new QMenu();
+    moreAction->addAction("Playlist");
+    moreAction->addAction("Add current song to playlist");
+    moreAction->addAction("Show download Progress");
+    moreButton->setMenu(moreAction);
 
     //sMethod->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
     sMethod->setMaximumWidth(sMethod->sizeHint().rwidth());
@@ -47,6 +53,9 @@ groove::groove(QWidget *parent) :
     resultView->setPalette(pal);*/
 
     layout->addWidget(sMethod);
+#ifdef Q_WS_MAEMO_5
+    setAttribute(Qt::WA_Maemo5AutoOrientation,true);
+#endif
     layout->addWidget(lineEdit);
     layout->addWidget(button);
     vlayout->addLayout(layout);
@@ -68,6 +77,7 @@ groove::groove(QWidget *parent) :
     connect(dButton,SIGNAL(clicked()),this, SLOT(play()));
     connect(stopButton,SIGNAL(clicked()),this,SLOT(stop()));
     connect(gs,SIGNAL(sKeyFound()),this,SLOT(startP()));
+    connect(moreButton,SIGNAL(clicked()),this,SLOT(moreB()));
 }
 void groove::search()
 {
@@ -140,4 +150,8 @@ void groove::startP()
 void groove::stop()
 {
     player->stop();
+}
+void groove::moreB()
+{
+    qDebug() << "He pressed the button";
 }
