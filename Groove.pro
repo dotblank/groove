@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     splayer.cpp \
     streamio.cpp \
     playlist.cpp \
-    downloadmanager.cpp
+    downloadmanager.cpp \
+    grooveprogressbar.cpp
 
 HEADERS += \
     groove.h \
@@ -35,4 +36,5 @@ HEADERS += \
     splayer.h \
     streamio.h \
     playlist.h \
-    downloadmanager.h
+    downloadmanager.h \
+    grooveprogressbar.h

@@ -6,6 +6,7 @@
 #include <phonon>
 #include "streamio.h"
 #include <QProgressDialog>
+#include "grooveprogressbar.h"
 
 class sPlayer : public QObject
 {
@@ -33,6 +34,6 @@ private:
     bool playing;
     QObject *internal;
     QTime startStreamT;
-    QProgressDialog *pd;
+    grooveProgressBar *pd;
 };
 #endif // SPLAYER_H

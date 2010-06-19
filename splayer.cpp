@@ -22,7 +22,8 @@ sPlayer::~sPlayer()
 }
 void sPlayer::abortDownload()
 {
-    reply->abort();
+    //pd->hide();
+    //reply->abort();
 }
 
 void sPlayer::play(QString StreamKey,QUrl server)
@@ -31,11 +32,15 @@ void sPlayer::play(QString StreamKey,QUrl server)
     {
         //reply->abort();
     }
-    pd = new QProgressDialog("Downloading / Buffering.", "Cancel", 0, 100);
-    pd->setValue(0);
+    pd = new grooveProgressBar();
+    //pd->setAttribute();
+
 #ifdef Q_WS_MAEMO_5
     pd->setAttribute(Qt::WA_Maemo5AutoOrientation,true);
+    //pd->setModal(false);
 #endif
+    pd->show();
+    pd->setValue(0);
     QNetworkRequest req;
     req.setUrl(server);
     qDebug() << server;
@@ -44,7 +49,7 @@ void sPlayer::play(QString StreamKey,QUrl server)
     buffer->open(buffer->ReadWrite | buffer->Truncate);
     connect(reply,SIGNAL(finished()),this,SLOT(start()));
     connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(putb(qint64,qint64)));
-    connect(pd,SIGNAL(canceled()),this,SLOT(abortDownload()));
+    //connect(pd,SIGNAL(canceled()),this,SLOT(abortDownload()));
     media->stop();
     playing = false;
     startStreamT = QTime::currentTime();

@@ -9,7 +9,7 @@ void StreamIO::setSizeOfStream(qint64 s)
 {
     internal->stream()->setStreamSize(s);
 }
-/*qint64 StreamIO::size()
+qint64 StreamIO::size()
 {
     return sized;
 }
@@ -20,7 +20,7 @@ qint64 StreamIO::bytesAvailable()
 bool StreamIO::isSequential()
 {
     return true;
-}/*
+}
 qint64 StreamIO::readData(char* data, qint64 maxsize)
 {
     internal->data().at(rpos);
