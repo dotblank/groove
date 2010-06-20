@@ -25,6 +25,15 @@ void sPlayer::abortDownload()
     //pd->hide();
     //reply->abort();
 }
+void sPlayer::play(QString StreamKey, QUrl server, QMaemo5Rotator::Orientation orientation)
+{
+    this->play(StreamKey, server);
+#ifdef Q_WS_MAEMO_5
+    if(orientation == QMaemo5Rotator::PortraitOrientation)
+        pd->rot->setCurrentOrientation(orientation);
+#endif
+    //isPortrait = false; //just make the compilier happy on non-maemo
+}
 
 void sPlayer::play(QString StreamKey,QUrl server)
 {
@@ -34,11 +43,6 @@ void sPlayer::play(QString StreamKey,QUrl server)
     }
     pd = new grooveProgressBar();
     //pd->setAttribute();
-
-#ifdef Q_WS_MAEMO_5
-    pd->setAttribute(Qt::WA_Maemo5AutoOrientation,true);
-    //pd->setModal(false);
-#endif
     pd->show();
     pd->setValue(0);
     QNetworkRequest req;
@@ -73,6 +77,7 @@ void sPlayer::start()
             playing = true;
             media->setCurrentSource(Phonon::MediaSource(buffer));
             media->play();
+            pd->hide();
             qDebug() << "Playing";
         }
     }
@@ -137,7 +142,7 @@ void sPlayer::putb(qint64 b, qint64 t)
         buffer->seek(last);
         //buffer->data().append(reply->readAll());*/
         //qDebug() << "Download speed (KB/S): " << b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024;
-        if ( b >= t*0.05 && !playing && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 25)
+        if ( b >= t*0.05 && !playing && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
         {
             pd->hide();
             playing = true;

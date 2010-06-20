@@ -3,6 +3,7 @@
 #include <QtGui>
 #include "gscom.h"
 #include "splayer.h"
+#include "qmaemo5rotator.h"
 #include <QMenuBar>
 
 class groove : public QWidget
@@ -21,6 +22,7 @@ public slots:
     void startP();
     void stop();
     void moreB();
+    void orientationChanged();
 
 private:
     sPlayer *player;
@@ -30,7 +32,9 @@ private:
     QLineEdit *lineEdit;
     QTableView *resultView;
     QPushButton *button;
+    bool portrait;
     gscom *gs;
+    QMaemo5Rotator *rot;
 
 };
 

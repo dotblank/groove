@@ -14,6 +14,7 @@ class sPlayer : public QObject
 public:
     explicit sPlayer(QObject *parent = 0);
     void play(QString StreamKey, QUrl server);
+    void play(QString StreamKey, QUrl server,QMaemo5Rotator::Orientation orientation);
     void stop();
     ~sPlayer();
 

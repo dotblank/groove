@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QtGui>
+#include "qmaemo5rotator.h"
 
 class grooveProgressBar : public QDialog
 {
@@ -12,6 +13,7 @@ public:
     void setMaximum(int maximum);
     void setValue(int position);
     int maximum();
+    QMaemo5Rotator *rot;
 
 signals:
 

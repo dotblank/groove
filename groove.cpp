@@ -1,5 +1,5 @@
 #include "groove.h"
-
+#include "qmaemo5rotator.h"
 
 
 groove::groove(QWidget *parent) :
@@ -51,11 +51,9 @@ groove::groove(QWidget *parent) :
     /*QPalette pal = resultView->palette();
     pal.setBrush(QPalette::Highlight,QBrush(Qt::transparent,Qt::NoBrush));
     resultView->setPalette(pal);*/
-
+    portrait = false;
     layout->addWidget(sMethod);
-#ifdef Q_WS_MAEMO_5
-    setAttribute(Qt::WA_Maemo5AutoOrientation,true);
-#endif
+    rot = new QMaemo5Rotator(QMaemo5Rotator::AutomaticBehavior,this);
     layout->addWidget(lineEdit);
     layout->addWidget(button);
     vlayout->addLayout(layout);
@@ -78,6 +76,7 @@ groove::groove(QWidget *parent) :
     connect(stopButton,SIGNAL(clicked()),this,SLOT(stop()));
     connect(gs,SIGNAL(sKeyFound()),this,SLOT(startP()));
     connect(moreButton,SIGNAL(clicked()),this,SLOT(moreB()));
+    //connect(rotator,SIGNAL(orientationChanged(Orientation)),this,SLOT(orientationChanged()));
 }
 void groove::search()
 {
@@ -144,8 +143,11 @@ void groove::startP()
         return;
     player->~sPlayer();
     player = new sPlayer();
+#ifdef Q_WS_MAEMO_5
+    player->play(gs->streamID,gs->sku,rot->currentOrientation());
+#else
     player->play(gs->streamID,gs->sku);
-
+#endif
 }
 void groove::stop()
 {
@@ -154,4 +156,14 @@ void groove::stop()
 void groove::moreB()
 {
     qDebug() << "He pressed the button";
+}
+void groove::orientationChanged()
+{
+#ifdef Q_WS_MAEMO_5
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (screenGeometry.width() > screenGeometry.height())
+        portrait = false;
+    else
+        portrait = true;
+#endif
 }
