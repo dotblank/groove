@@ -40,3 +40,9 @@ HEADERS += \
     downloadmanager.h \
     grooveprogressbar.h \
     qmaemo5rotator.h
+
+OTHER_FILES += \
+    icon.svg
+
+RESOURCES += \
+    reasource.qrc
