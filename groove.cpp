@@ -74,9 +74,11 @@ groove::groove(QWidget *parent) :
     connect(pushMenu,SIGNAL(triggered(QAction*)),this,SLOT(changeS(QAction*)));
     connect(dButton,SIGNAL(clicked()),this, SLOT(play()));
     connect(stopButton,SIGNAL(clicked()),this,SLOT(stop()));
-    connect(gs,SIGNAL(sKeyFound()),this,SLOT(startP()));
     connect(moreButton,SIGNAL(clicked()),this,SLOT(moreB()));
     //connect(rotator,SIGNAL(orientationChanged(Orientation)),this,SLOT(orientationChanged()));
+    pl = new playlist();
+    pl->setGscom(gs);
+    player->setPlaylist(pl);
 }
 void groove::search()
 {
@@ -132,22 +134,10 @@ void groove::play()
         if(item == 0)
             return;
         //gs->getSong();
-        gs->getSong(item->text());
+        player->play(pl->addSong(item));
     }
     //selected.
     //if
-}
-void groove::startP()
-{
-    if(!gs->sku.isValid())
-        return;
-    player->~sPlayer();
-    player = new sPlayer();
-#ifdef Q_WS_MAEMO_5
-    player->play(gs->streamID,gs->sku,rot->currentOrientation());
-#else
-    player->play(gs->streamID,gs->sku);
-#endif
 }
 void groove::stop()
 {

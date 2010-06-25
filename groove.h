@@ -5,6 +5,7 @@
 #include "splayer.h"
 #include "qmaemo5rotator.h"
 #include <QMenuBar>
+#include "playlist.h"
 
 class groove : public QWidget
 {
@@ -19,7 +20,6 @@ public slots:
     void finishedS();
     void changeS( QAction * action);
     void play();
-    void startP();
     void stop();
     void moreB();
     void orientationChanged();
@@ -35,6 +35,7 @@ private:
     bool portrait;
     gscom *gs;
     QMaemo5Rotator *rot;
+    playlist *pl;
 
 };
 

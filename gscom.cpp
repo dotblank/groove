@@ -19,7 +19,7 @@ gscom::gscom()
     model->setHorizontalHeaderLabels(
         QStringList() << "Online");
     addDebugMsg("You may now search for a song");
-    addProgressbar("test");
+    //addProgressbar("test");
     //getSessionKey();
 }
 

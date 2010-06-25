@@ -7,24 +7,29 @@
 #include "streamio.h"
 #include <QProgressDialog>
 #include "grooveprogressbar.h"
+#include "playlist.h"
 
 class sPlayer : public QObject
 {
     Q_OBJECT
 public:
     explicit sPlayer(QObject *parent = 0);
-    void play(QString StreamKey, QUrl server);
-    void play(QString StreamKey, QUrl server,QMaemo5Rotator::Orientation orientation);
+    void play(int p);
+    void playNext();
+    void play();
     void stop();
+    void setPlaylist(playlist *playList);
     ~sPlayer();
 
 signals:
     void finishedPlaying();
     void downloadComplete();
 public slots:
-    void start();
-    void putb(qint64,qint64);
+    void start(int p);
+    void putb(int p,qint64,qint64);
     void abortDownload();
+private slots:
+    void markComplete();
 private:
     QNetworkAccessManager *manager;
     Phonon::AudioOutput *audioOutput;
@@ -36,5 +41,6 @@ private:
     QObject *internal;
     QTime startStreamT;
     grooveProgressBar *pd;
+    playlist *pl;
 };
 #endif // SPLAYER_H

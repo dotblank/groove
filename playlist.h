@@ -19,17 +19,21 @@ public:
         Other =2
     };
     explicit playlist(QObject *parent = 0);
-    void addSong(QStandardItem item);
-    void addSong(QString songid);
-    void addsong(QString streamkey, QUrl server);
+    int addSong(QStandardItem *item);
     QList<QStandardItem *> getPlaylist();
     void removeSong(int position);
     void getSong(int position);
     QIODevice * getBuffer(int position);
     bool isStream(int position);
-    void markComplete(int position);
+    void markPlayed(int position);
     void deleteSong(int position);
     void setGscom(gscom *comm);
+    void freeMemory(int position);
+    int currentplaying();
+    bool setCurrentPlaying(int position);
+    bool bReady(int b);
+    int findFirstNotPlayed();
+    void beginDownload(int position);
 
 signals:
     void downloadProgress(int position, qint64 d, qint64 t);
@@ -42,10 +46,13 @@ signals:
 public slots:
 private slots:
     void downloadSlot(qint64 d, qint64 t);
+    void networkReplyFinish();
     void downloadDone(int position);
     void skeyFound();
+    void setBufferRdy(int b);
 private:
-    void beginDownload(int position);
+
+
     enum elementType
     {
         EStream = 1,
@@ -64,6 +71,7 @@ private:
         bool played;
         bool bufferready;
     };
+    int currentplayingitem;
     int currentSkeyItem;
     QList<songElement *> *pList;
     QSignalMapper *mapper;

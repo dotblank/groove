@@ -12,12 +12,26 @@ sPlayer::sPlayer(QObject *parent) :
     //reply = new QNetworkReply();
     internal = parent;
     //buffer->open(QIODevice::ReadWrite);
+    connect(media,SIGNAL(finished()),this,SLOT(markComplete()));
 }
+void sPlayer::setPlaylist(playlist *playList)
+{
+    this->pl = playList;
+    connect(pl,SIGNAL(bufferReady(int)),this,SLOT(start(int)));
+    connect(pl,SIGNAL(downloadProgress(int,qint64,qint64)),this,SLOT(putb(int,qint64,qint64)));
+    //connect(pl,SIGNAL(downloadComplete(int)),this,SLOT(start(int)));
+
+}
+void sPlayer::markComplete()
+{
+    pl->markPlayed(pl->currentplaying());
+    pl->setCurrentPlaying(-1);
+}
+
 sPlayer::~sPlayer()
 {
     manager->~QNetworkAccessManager();
     //reply->~QIODevice();
-    buffer->~QBuffer();
     media->~MediaNode();
 }
 void sPlayer::abortDownload()
@@ -25,131 +39,50 @@ void sPlayer::abortDownload()
     //pd->hide();
     //reply->abort();
 }
-void sPlayer::play(QString StreamKey, QUrl server, QMaemo5Rotator::Orientation orientation)
-{
-    this->play(StreamKey, server);
-#ifdef Q_WS_MAEMO_5
-    if(orientation == QMaemo5Rotator::PortraitOrientation)
-        pd->rot->setCurrentOrientation(orientation);
-#endif
-    //isPortrait = false; //just make the compilier happy on non-maemo
-}
 
-void sPlayer::play(QString StreamKey,QUrl server)
+void sPlayer::start(int p)
 {
-    if(playing)
-    {
-        //reply->abort();
-    }
-    pd = new grooveProgressBar();
-    //pd->setAttribute();
-    pd->show();
-    pd->setValue(0);
-    QNetworkRequest req;
-    req.setUrl(server);
-    qDebug() << server;
-    req.setHeader(req.ContentTypeHeader,QVariant("application/x-www-form-urlencoded"));
-    reply = manager->post(req,QString("streamKey=" + StreamKey.toAscii()).toAscii());
-    buffer->open(buffer->ReadWrite | buffer->Truncate);
-    connect(reply,SIGNAL(finished()),this,SLOT(start()));
-    connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(putb(qint64,qint64)));
-    //connect(pd,SIGNAL(canceled()),this,SLOT(abortDownload()));
-    media->stop();
-    playing = false;
-    startStreamT = QTime::currentTime();
-}
-void sPlayer::start()
-{
-    QVariant url = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-    if(url.toUrl().isValid())
-    {
-        QNetworkRequest req;
-        req.setUrl(url.toUrl());
-        qDebug() << url;
-        reply = manager->get(req);
-        connect(reply,SIGNAL(finished()),this,SLOT(start()));
-        connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(putb(qint64,qint64)));
-    }
-    else
-    {
-        if(!playing)
+    qDebug() << "got start play";
+    if(p == pl->currentplaying())
         {
             playing = true;
-            media->setCurrentSource(Phonon::MediaSource(buffer));
+            media->setCurrentSource(Phonon::MediaSource(pl->getBuffer(p)));
             media->play();
-            pd->hide();
             qDebug() << "Playing";
         }
-    }
-    /*else
-    {
-        media->stop();
-        buffer->close();
-        buffer->open(QIODevice::ReadWrite | QIODevice::Truncate);
-        buffer->write(reply->readAll());
-        reply->close();
-        media->setCurrentSource(Phonon::MediaSource(buffer));
-        media->play();
-    }*/
+
 }
+void sPlayer::play()
+{
+    if(pl->currentplaying() != -1)
+    {
+        //pl->setCurrentPlaying(pl->findFirstNotPlayed());
+    }
+    else
+        return;
+}
+void sPlayer::play(int p)
+{
+    pl->setCurrentPlaying(p);
+    //pl->beginDownload(p);
+}
+
 void sPlayer::stop()
 {
+    pl->setCurrentPlaying(-1);
     media->stop();
+    playing = false;
 }
 
-void sPlayer::putb(qint64 b, qint64 t)
+void sPlayer::putb(int p, qint64 b, qint64 t)
 {
     //qDebug() << "Download: " << b << "Total: " << t;
-    if(b == 0 && t == 0)
+    if(p == pl->currentplaying())
     {
-        QVariant url = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-        if(url.toUrl().isValid())
-        {
-            QNetworkRequest req;
-            req.setUrl(url.toUrl());
-            qDebug() << url;
-            reply = manager->get(req);
-            connect(reply,SIGNAL(finished()),this,SLOT(start()));
-            connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(putb(qint64,qint64)));
-        }
-        else
-        {
-            //buffer->close();
-            reply->close();
-        }
-    }
-    else
-    {
-        if(pd->maximum() != t)
-            pd->setMaximum(t);
-        pd->setValue(b);
-
-        buffer->buffer().append(reply->readAll());
-        //qDebug() << buffer->bytesAvailable();
-        if(playing)
+        if(pl->bReady(p))
         {
             StreamIO* stream = (StreamIO*) media->currentSource().stream();
-            stream->setStreamSize(buffer->size());
-        }
-
-        /*
-        //buffer->seek(b);
-        qint64 last = buffer->pos();
-        buffer->seek(buffer->bytesAvailable()+buffer->pos());
-        qDebug() << buffer->write(reply->readAll());
-        qDebug() << buffer->pos();
-        //buffer->putChar()
-        buffer->seek(last);
-        //buffer->data().append(reply->readAll());*/
-        //qDebug() << "Download speed (KB/S): " << b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024;
-        if ( b >= t*0.05 && !playing && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
-        {
-            pd->hide();
-            playing = true;
-            //Start playback at 25% download
-            media->setCurrentSource(Phonon::MediaSource(buffer));
-            media->play();
-            qDebug() << "Playing";
+            stream->setStreamSize(pl->getBuffer(p)->size());
         }
     }
 }
