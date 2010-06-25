@@ -6,7 +6,8 @@ playlist::playlist(QObject *parent) :
    manager = new QNetworkAccessManager();
    this->currentdownloaditem = -1;
    pList = new QList<songElement *>;
-   this->currentplayingitem =-1;
+   this->currentplayingitem = -1;
+   this->currentSkeyItem = -1;
 }
 void playlist::markPlayed(int position)
 {
@@ -86,7 +87,7 @@ void playlist::skeyFound()
         this->beginDownload(this->currentSkeyItem);
     else
         if(this->currentplaying() == this->currentSkeyItem)
-            this->beginDownload(this->currentplayingitem);
+            this->beginDownload(this->currentSkeyItem);
 }
 
 int playlist::addSong(QStandardItem *item)
@@ -103,6 +104,7 @@ int playlist::addSong(QStandardItem *item)
     pList->append(newelement);
     gs->getSong(item->text());
     emit this->freeze();
+    this->currentSkeyItem = pList->size()-1;
     return pList->size()-1;
 }
 
@@ -137,7 +139,9 @@ void playlist::downloadSlot(qint64 b, qint64 t)
     {
         emit this->downloadProgress(this->currentdownloaditem,b,t);
         pList->at(this->currentdownloaditem)->buffer->buffer().append(reply->readAll());
-        if ( b >= t*0.05 && !pList->at(currentdownloaditem)->bufferready && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
+        //qDebug() << !pList->at(this->currentdownloaditem)->bufferready << this->currentdownloaditem;
+        if ( b >= t*0.05 && !pList->at(this->currentdownloaditem)->bufferready)
+            //if(!pList->at(currentdownloaditem)->bufferready && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
         {
             this->setBufferRdy(this->currentdownloaditem);
             emit this->bufferReady(this->currentdownloaditem);

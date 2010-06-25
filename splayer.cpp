@@ -63,14 +63,19 @@ void sPlayer::play()
 }
 void sPlayer::play(int p)
 {
+    if(pl->currentplaying() != -1)
+        pl->freeMemory(pl->currentplaying());
     pl->setCurrentPlaying(p);
     //pl->beginDownload(p);
 }
 
 void sPlayer::stop()
 {
-    pl->setCurrentPlaying(-1);
+
     media->stop();
+    if(pl->currentplaying() != -1)
+        pl->markPlayed(pl->currentplaying());
+    pl->setCurrentPlaying(-1);
     playing = false;
 }
 
