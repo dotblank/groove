@@ -46,3 +46,16 @@ OTHER_FILES += \
 
 RESOURCES += \
     reasource.qrc
+unix {
+  PREFIX = /usr
+  BINDIR = $$PREFIX/bin
+  DATADIR =$$PREFIX/share
+
+  DEFINES += DATADIR=\"$$DATADIR\" PKGDATADIR=\"$$PKGDATADIR\"
+
+  #MAKE INSTALL
+
+  INSTALLS += target
+
+  target.path =$$BINDIR
+}
