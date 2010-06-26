@@ -34,6 +34,7 @@ public:
     bool bReady(int b);
     int findFirstNotPlayed();
     void beginDownload(int position);
+    bool existAt(int position);
 
 signals:
     void downloadProgress(int position, qint64 d, qint64 t);

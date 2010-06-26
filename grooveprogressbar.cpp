@@ -1,6 +1,6 @@
 #include "grooveprogressbar.h"
 #include "qmaemo5rotator.h"
-grooveProgressBar::grooveProgressBar(QDialog *parent) :
+grooveProgressBar::grooveProgressBar(QWidget *parent) :
     QDialog(parent)
 {
     bar = new QProgressBar();
@@ -10,7 +10,7 @@ grooveProgressBar::grooveProgressBar(QDialog *parent) :
     lay->addWidget(bar);
     this->setLayout(lay);
     this->setWindowTitle("Downloading /  Buffering");
-    rot = new QMaemo5Rotator(QMaemo5Rotator::AutomaticBehavior,this);
+    //rot = new QMaemo5Rotator(QMaemo5Rotator::AutomaticBehavior,this);
 }
 void grooveProgressBar::setMaximum(int maximum)
 {

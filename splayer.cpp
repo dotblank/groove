@@ -25,7 +25,14 @@ void sPlayer::setPlaylist(playlist *playList)
 void sPlayer::markComplete()
 {
     pl->markPlayed(pl->currentplaying());
-    pl->setCurrentPlaying(-1);
+    if(pl->existAt(pl->currentplaying()+1))
+    {
+        pl->setCurrentPlaying(pl->currentplaying()+1);
+        if(pl->bReady(pl->currentplaying()))
+            this->start(pl->currentplaying());
+    }
+    else
+        pl->setCurrentPlaying(-1);
 }
 
 sPlayer::~sPlayer()

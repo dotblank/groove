@@ -9,12 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="48"
-   height="48"
+   width="64"
+   height="64"
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="icon.svg">
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/home/eli/Projects/qt4/Groove/icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -26,7 +29,8 @@
        id="perspective10" />
     <filter
        inkscape:collect="always"
-       id="filter3692">
+       id="filter3692"
+       color-interpolation-filters="sRGB">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="0.17004"
@@ -38,10 +42,10 @@
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="192.53571"
+     inkscape:cx="130.92857"
      inkscape:cy="62.857143"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -67,14 +71,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1004.3622)">
+     transform="translate(0,-988.3622)">
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#1a1a1a;fill-opacity:1;stroke:#d4aa00;stroke-opacity:1;font-family:FreeSerif;-inkscape-font-specification:FreeSerif;filter:url(#filter3692)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#1a1a1a;fill-opacity:1;stroke:#d4aa00;stroke-opacity:1;filter:url(#filter3692);font-family:FreeSerif;-inkscape-font-specification:FreeSerif"
        x="-0.10571399"
        y="1033.0308"
        id="text2816"
-       transform="matrix(1.494539,0,0,1.494539,2.7232098,-495.39786)"><tspan
+       transform="matrix(1.9166445,0,0,1.9166445,3.7979447,-934.21415)"><tspan
          sodipodi:role="line"
          id="tspan2818"
          x="-0.10571399"

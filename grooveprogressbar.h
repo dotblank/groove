@@ -9,7 +9,7 @@ class grooveProgressBar : public QDialog
 {
     Q_OBJECT
 public:
-    explicit grooveProgressBar(QDialog *parent = 0);
+    explicit grooveProgressBar(QWidget *parent = 0);
     void setMaximum(int maximum);
     void setValue(int position);
     int maximum();

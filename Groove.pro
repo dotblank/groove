@@ -5,18 +5,18 @@
 TEMPLATE = app
 TARGET = groove
 #target = groove
-target.path = /usr/bin
+#target.path = /usr/bin
 #//target.path = /usr/local/
-INSTALLS += target
+#INSTALLS += target
 #CONFIG += build_all
 DEPENDPATH += .
 INCLUDEPATH += .
-#INCLUDEPATH += /usr/include/qjson
-INCLUDEPATH += ../qjson/src/
+INCLUDEPATH += /usr/include/qjson
+#INCLUDEPATH += ../qjson/src/
 #INCLUDEPATH += ./src/
 #LIBS += -L/usr/lib -lqjson ##Desktop Target
-#LIBS += -L/usr/local/lib -lqjson ##Armel Target
-LIBS += -L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson ##Armel Target SDK
+LIBS += -L/usr/local/lib -lqjson ##Armel Target
+#LIBS += -L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson ##Armel Target SDK
 #LIBS += -L../qjson/lib -lqjson ##X86 maemo
 QT += network
 QT += phonon
@@ -42,10 +42,8 @@ HEADERS += \
     qmaemo5rotator.h
 
 OTHER_FILES += \
-    icon.svg
-
-RESOURCES += \
-    reasource.qrc
+    icon.svg \
+    groove.png
 unix {
   PREFIX = /usr
   BINDIR = $$PREFIX/bin
@@ -55,7 +53,13 @@ unix {
 
   #MAKE INSTALL
 
-  INSTALLS += target
+  INSTALLS += target desktop icon64
 
   target.path =$$BINDIR
+
+  desktop.path = $$DATADIR/applications/hildon
+  desktop.files += groove.desktop
+
+  icon64.path = $$DATADIR/icons/hicolor/64x64/apps
+  icon64.files += groove.png
 }

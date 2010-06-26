@@ -25,11 +25,12 @@ groove::groove(QWidget *parent) :
     pushMenu->addAction("Song:");
     //pushMenu->addAction("Artist:");
     //pushMenu->addAction("Album:");
-
+    pd = new grooveProgressBar(this);
+    pd->hide();
     QMenu *moreAction = new QMenu();
     moreAction->addAction("Playlist");
-    moreAction->addAction("Add current song to playlist");
-    moreAction->addAction("Show download Progress");
+    connect(moreAction->addAction("Add current song to playlist"),SIGNAL(triggered()),this,SLOT(addSongPlaylist()));
+    connect(moreAction->addAction("Show download Progress"),SIGNAL(triggered()),pd,SLOT(show()));
     moreButton->setMenu(moreAction);
 
     //sMethod->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
@@ -79,6 +80,8 @@ groove::groove(QWidget *parent) :
     pl = new playlist();
     pl->setGscom(gs);
     player->setPlaylist(pl);
+    connect(pl,SIGNAL(downloadProgress(int,qint64,qint64)),this,SLOT(progressUpdate(int,qint64,qint64)));
+    connect(pl,SIGNAL(bufferReady(int)),pd,SLOT(close()));
 }
 void groove::search()
 {
@@ -135,10 +138,35 @@ void groove::play()
             return;
         //gs->getSong();
         player->play(pl->addSong(item));
+        pd->setMaximum(100);
+        pd->setValue(0);
+        pd->show();
     }
     //selected.
     //if
 }
+void groove::addSongPlaylist()
+{
+    QModelIndexList selected = resultView->selectionModel()->selectedRows(0);
+    if(!selected.isEmpty())
+    {
+        QStandardItem *item = model->item(selected.first().row(),2);
+        if(item == 0)
+            return;
+        //gs->getSong();
+        if(pl->currentplaying() == -1)
+        {
+            player->play(pl->addSong(item));
+        }
+        else
+            pl->addSong(item);
+        pd->setMaximum(100);
+        pd->setValue(0);
+        pd->show();
+        model->item(selected.first().row(),1)->setText("Added to Playlist");;
+    }
+}
+
 void groove::stop()
 {
     player->stop();
@@ -147,6 +175,15 @@ void groove::moreB()
 {
     qDebug() << "He pressed the button";
 }
+void groove::progressUpdate(int p, qint64 d, qint64 t)
+{
+    //if(!pd->isHidden())
+    //{
+        pd->setMaximum(t);
+        pd->setValue(d);
+    //}
+}
+
 void groove::orientationChanged()
 {
 #ifdef Q_WS_MAEMO_5

@@ -19,6 +19,10 @@ void playlist::freeMemory(int position)
    pList->at(position)->buffer->~QBuffer();
    pList->at(position)->buffer = new QBuffer();
 }
+bool playlist::existAt(int position)
+{
+    return (pList->size() > position);
+}
 
 int playlist::currentplaying()
 {
@@ -26,7 +30,10 @@ int playlist::currentplaying()
 }
 bool playlist::bReady(int b)
 {
-    return pList->at(b)->bufferready;
+    if(pList->size() > b)
+        return pList->at(b)->bufferready;
+    else
+        return false;
 }
 void playlist::setBufferRdy(int b)
 {
@@ -63,8 +70,7 @@ void playlist::beginDownload(int position)
     req.setUrl(*pList->at(currentdownloaditem)->server);
     qDebug() << pList->at(currentdownloaditem)->server;
     req.setHeader(req.ContentTypeHeader,QVariant("application/x-www-form-urlencoded"));
-    if(reply)
-        reply->~QNetworkReply();
+    delete reply;
     reply = manager->post(req,QString("streamKey=" + pList->at(this->currentdownloaditem)->streamkey->toAscii()).toAscii());
     pList->at(this->currentdownloaditem)->buffer->open(QBuffer::ReadWrite | QBuffer::Truncate);
     connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(downloadSlot(qint64,qint64)));
@@ -88,6 +94,7 @@ void playlist::skeyFound()
     else
         if(this->currentplaying() == this->currentSkeyItem)
             this->beginDownload(this->currentSkeyItem);
+    this->currentSkeyItem = -1;
 }
 
 int playlist::addSong(QStandardItem *item)
@@ -110,7 +117,7 @@ int playlist::addSong(QStandardItem *item)
 
 void playlist::downloadDone(int position)
 {
-    if(pList->size() < position+1)
+    if(this->existAt(position+1) && this->currentSkeyItem == -1)
         beginDownload(position+1);
     else
         this->currentdownloaditem = -1;

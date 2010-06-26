@@ -118,7 +118,7 @@
      <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">qmake</value>
      <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
      <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList">
-      <value type="QString">LIBS+=-L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson</value>
+      <value type="QString">INCLUDEPATH+=../qjson/src LIBS+=-L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson</value>
      </valuelist>
     </valuemap>
     <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
@@ -194,7 +194,7 @@
     </valuemap>
     <value key="Qt4ProjectManager.MaemoRunConfiguration.DeviceId" type="qulonglong">1</value>
     <valuemap key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployed" type="QVariantMap">
-     <value key="192.168.1.3" type="QDateTime">2010-06-25T05:45:13</value>
+     <value key="192.168.1.3" type="QDateTime">2010-06-25T21:36:22</value>
     </valuemap>
     <value key="Qt4ProjectManager.MaemoRunConfiguration.Simulator" type="QString"></value>
    </valuemap>
