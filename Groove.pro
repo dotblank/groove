@@ -28,8 +28,7 @@ SOURCES += main.cpp \
     streamio.cpp \
     playlist.cpp \
     downloadmanager.cpp \
-    grooveprogressbar.cpp \
-    qmaemo5rotator.cpp
+    grooveprogressbar.cpp
 
 HEADERS += \
     groove.h \
@@ -38,9 +37,12 @@ HEADERS += \
     streamio.h \
     playlist.h \
     downloadmanager.h \
-    grooveprogressbar.h \
-    qmaemo5rotator.h
+    grooveprogressbar.h
 
+maemo5 {
+SOURCES += qmaemo5rotator.cpp
+HEADERS += qmaemo5rotator.h
+}
 OTHER_FILES += \
     icon.svg \
     groove.png

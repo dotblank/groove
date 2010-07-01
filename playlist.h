@@ -41,8 +41,7 @@ signals:
     void bufferReady(int position);
     void sFailure(int position,failType);
     void downloadComplete(int position);
-    void freeze();
-    void unfreeze();
+    void freeze(bool);
 
 public slots:
 private slots:

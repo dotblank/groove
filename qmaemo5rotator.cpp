@@ -5,7 +5,7 @@
 #include <mce/mode-names.h>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusMessage>
-#endif
+
 
 QMaemo5Rotator::QMaemo5Rotator(RotationBehavior behavior, QWidget *parent)
     : QObject(parent),
@@ -16,9 +16,7 @@ QMaemo5Rotator::QMaemo5Rotator(RotationBehavior behavior, QWidget *parent)
 
 QMaemo5Rotator::~QMaemo5Rotator()
 {
-#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     QDBusConnection::systemBus().call(QDBusMessage::createMethodCall(MCE_SERVICE, MCE_REQUEST_PATH, MCE_REQUEST_IF, MCE_ACCELEROMETER_DISABLE_REQ));
-#endif
 }
 
 const QMaemo5Rotator::RotationBehavior QMaemo5Rotator::currentBehavior()
@@ -33,7 +31,6 @@ const QMaemo5Rotator::Orientation QMaemo5Rotator::currentOrientation()
 
 void QMaemo5Rotator::setCurrentBehavior(QMaemo5Rotator::RotationBehavior value)
 {
-#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     if (value == _currentBehavior && isSetUp)
         return;
 
@@ -58,7 +55,6 @@ void QMaemo5Rotator::setCurrentBehavior(QMaemo5Rotator::RotationBehavior value)
             setCurrentOrientation(QMaemo5Rotator::LandscapeOrientation);
         }
     }
-#endif
 }
 
 void QMaemo5Rotator::setCurrentOrientation(QMaemo5Rotator::Orientation value)
@@ -71,20 +67,16 @@ void QMaemo5Rotator::setCurrentOrientation(QMaemo5Rotator::Orientation value)
     case QMaemo5Rotator::PortraitOrientation:
         if (par != NULL)
         {
-#if defined(Q_WS_MAEMO_5)
             par->setAttribute(Qt::WA_Maemo5LandscapeOrientation, false);
             par->setAttribute(Qt::WA_Maemo5PortraitOrientation, true);
-#endif
         }
         orientationChanged(QMaemo5Rotator::PortraitOrientation);
         break;
     case QMaemo5Rotator::LandscapeOrientation:
         if (par != NULL)
         {
-#if defined(Q_WS_MAEMO_5)
             par->setAttribute(Qt::WA_Maemo5PortraitOrientation, false);
             par->setAttribute(Qt::WA_Maemo5LandscapeOrientation, true);
-#endif
         }
         orientationChanged(QMaemo5Rotator::LandscapeOrientation);
 
@@ -104,3 +96,4 @@ void QMaemo5Rotator::on_orientation_changed(const QString& newOrientation)
     }
     QApplication::desktop()->updateGeometry();
 }
+#endif

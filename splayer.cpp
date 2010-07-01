@@ -34,6 +34,21 @@ void sPlayer::markComplete()
     else
         pl->setCurrentPlaying(-1);
 }
+void sPlayer::pause()
+{
+    if(media->state() == Phonon::PausedState)
+        media->play();
+    if(media->state() == Phonon::PlayingState)
+        media->pause();
+}
+void sPlayer::playNext()
+{
+    if(pl->existAt(pl->currentplaying()+1))
+    {
+        media->stop();
+        this->markComplete();
+    }
+}
 
 sPlayer::~sPlayer()
 {

@@ -8,6 +8,7 @@ playlist::playlist(QObject *parent) :
    pList = new QList<songElement *>;
    this->currentplayingitem = -1;
    this->currentSkeyItem = -1;
+   this->reply = NULL;
 }
 void playlist::markPlayed(int position)
 {
@@ -16,7 +17,7 @@ void playlist::markPlayed(int position)
 }
 void playlist::freeMemory(int position)
 {
-   pList->at(position)->buffer->~QBuffer();
+   delete pList->at(position)->buffer;
    pList->at(position)->buffer = new QBuffer();
 }
 bool playlist::existAt(int position)
@@ -70,7 +71,11 @@ void playlist::beginDownload(int position)
     req.setUrl(*pList->at(currentdownloaditem)->server);
     qDebug() << pList->at(currentdownloaditem)->server;
     req.setHeader(req.ContentTypeHeader,QVariant("application/x-www-form-urlencoded"));
-    delete reply;
+    if(reply)
+    {
+        reply->abort();
+        delete reply;
+    }
     reply = manager->post(req,QString("streamKey=" + pList->at(this->currentdownloaditem)->streamkey->toAscii()).toAscii());
     pList->at(this->currentdownloaditem)->buffer->open(QBuffer::ReadWrite | QBuffer::Truncate);
     connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(downloadSlot(qint64,qint64)));
@@ -86,7 +91,7 @@ void playlist::setGscom(gscom *comm)
 }
 void playlist::skeyFound()
 {
-    emit this->unfreeze();
+    emit this->freeze(false);
     pList->at(this->currentSkeyItem)->streamkey = new QString(gs->streamID);
     pList->at(this->currentSkeyItem)->server = new QUrl(gs->sku);
     if(this->currentdownloaditem == -1)
@@ -110,8 +115,9 @@ int playlist::addSong(QStandardItem *item)
     newelement->type = playlist::EStream;
     pList->append(newelement);
     gs->getSong(item->text());
-    emit this->freeze();
+
     this->currentSkeyItem = pList->size()-1;
+    emit this->freeze(true);
     return pList->size()-1;
 }
 
@@ -145,20 +151,23 @@ void playlist::downloadSlot(qint64 b, qint64 t)
     if(t != 0)
     {
         emit this->downloadProgress(this->currentdownloaditem,b,t);
-        pList->at(this->currentdownloaditem)->buffer->buffer().append(reply->readAll());
-        //qDebug() << !pList->at(this->currentdownloaditem)->bufferready << this->currentdownloaditem;
-        if ( b >= t*0.05 && !pList->at(this->currentdownloaditem)->bufferready)
-            //if(!pList->at(currentdownloaditem)->bufferready && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
+        if(existAt(this->currentdownloaditem))
         {
-            this->setBufferRdy(this->currentdownloaditem);
-            emit this->bufferReady(this->currentdownloaditem);
+            pList->at(this->currentdownloaditem)->buffer->buffer().append(reply->readAll());
+            //qDebug() << !pList->at(this->currentdownloaditem)->bufferready << this->currentdownloaditem;
+            if ( b >= t*0.05 && !pList->at(this->currentdownloaditem)->bufferready)
+                //if(!pList->at(currentdownloaditem)->bufferready && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
+            {
+                this->setBufferRdy(this->currentdownloaditem);
+                emit this->bufferReady(this->currentdownloaditem);
 
-            qDebug() << "Buffer Ready";
-        }
-        if (b==t)
-        {
+                qDebug() << "Buffer Ready";
+            }
+            if (b==t)
+            {
             emit this->downloadComplete(this->currentdownloaditem);
             //emit this->bufferReady(this->currentdownloaditem);
+            }
         }
     }
 }

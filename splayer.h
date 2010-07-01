@@ -15,9 +15,10 @@ class sPlayer : public QObject
 public:
     explicit sPlayer(QObject *parent = 0);
     void play(int p);
-    void playNext();
+
     void play();
     void stop();
+    void pause();
     void setPlaylist(playlist *playList);
     ~sPlayer();
 
@@ -26,6 +27,7 @@ signals:
     void downloadComplete();
 public slots:
     void start(int p);
+    void playNext();
     void putb(int p,qint64,qint64);
     void abortDownload();
 private slots:

@@ -3,7 +3,9 @@
 #include <QtGui>
 #include "gscom.h"
 #include "splayer.h"
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include "qmaemo5rotator.h"
+#endif
 #include <QMenuBar>
 #include "playlist.h"
 #include "grooveprogressbar.h"
@@ -37,7 +39,9 @@ private:
     QPushButton *button;
     bool portrait;
     gscom *gs;
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     QMaemo5Rotator *rot;
+#endif
     playlist *pl;
     grooveProgressBar *pd;
 

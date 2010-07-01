@@ -1,5 +1,7 @@
 #include "groove.h"
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include "qmaemo5rotator.h"
+#endif
 
 
 groove::groove(QWidget *parent) :
@@ -14,9 +16,10 @@ groove::groove(QWidget *parent) :
     QVBoxLayout *vlayout = new QVBoxLayout();
     QHBoxLayout *bottomLayout = new QHBoxLayout();
     button = new QPushButton("Search");
-    QPushButton *dButton = new QPushButton("Play");
-    QPushButton *stopButton = new QPushButton("Stop");
+    QPushButton *dButton = new QPushButton("Queue");
+    QPushButton *stopButton = new QPushButton("Pause");
     QPushButton *moreButton = new QPushButton("...");
+    QPushButton *nextB = new QPushButton("->");
     resultView = new QTableView();
     QMenu *pushMenu = new QMenu();
     //showFullScreen();
@@ -28,8 +31,8 @@ groove::groove(QWidget *parent) :
     pd = new grooveProgressBar(this);
     pd->hide();
     QMenu *moreAction = new QMenu();
-    moreAction->addAction("Playlist");
-    connect(moreAction->addAction("Add current song to playlist"),SIGNAL(triggered()),this,SLOT(addSongPlaylist()));
+    //moreAction->addAction("Playlist");
+    connect(moreAction->addAction("Play Now"),SIGNAL(triggered()),this,SLOT(play()));
     connect(moreAction->addAction("Show download Progress"),SIGNAL(triggered()),pd,SLOT(show()));
     moreButton->setMenu(moreAction);
 
@@ -54,7 +57,10 @@ groove::groove(QWidget *parent) :
     resultView->setPalette(pal);*/
     portrait = false;
     layout->addWidget(sMethod);
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     rot = new QMaemo5Rotator(QMaemo5Rotator::AutomaticBehavior,this);
+#endif
+    //this->setAttribute(Qt::WA_Maemo5AutoOrientation);
     layout->addWidget(lineEdit);
     layout->addWidget(button);
     vlayout->addLayout(layout);
@@ -62,6 +68,7 @@ groove::groove(QWidget *parent) :
     vlayout->addLayout(bottomLayout);
     bottomLayout->addWidget(dButton);
     bottomLayout->addWidget(stopButton);
+    bottomLayout->addWidget(nextB);
     bottomLayout->addWidget(moreButton);
     vlayout->setMenuBar(mBar);
     setLayout(vlayout);
@@ -73,7 +80,7 @@ groove::groove(QWidget *parent) :
     connect(gs, SIGNAL(finishedSearch()), this, SLOT(finishedS()));
     connect(lineEdit,SIGNAL(returnPressed()),this, SLOT(search()));
     connect(pushMenu,SIGNAL(triggered(QAction*)),this,SLOT(changeS(QAction*)));
-    connect(dButton,SIGNAL(clicked()),this, SLOT(play()));
+    connect(dButton,SIGNAL(clicked()),this, SLOT(addSongPlaylist()));
     connect(stopButton,SIGNAL(clicked()),this,SLOT(stop()));
     connect(moreButton,SIGNAL(clicked()),this,SLOT(moreB()));
     //connect(rotator,SIGNAL(orientationChanged(Orientation)),this,SLOT(orientationChanged()));
@@ -82,6 +89,10 @@ groove::groove(QWidget *parent) :
     player->setPlaylist(pl);
     connect(pl,SIGNAL(downloadProgress(int,qint64,qint64)),this,SLOT(progressUpdate(int,qint64,qint64)));
     connect(pl,SIGNAL(bufferReady(int)),pd,SLOT(close()));
+    connect(pl,SIGNAL(freeze(bool)),resultView,SLOT(setDisabled(bool)));
+    connect(pl,SIGNAL(freeze(bool)),pushMenu,SLOT(setDisabled(bool)));
+    connect(pl,SIGNAL(freeze(bool)),dButton,SLOT(setDisabled(bool)));
+    connect(nextB,SIGNAL(clicked()),player,SLOT(playNext()));
 }
 void groove::search()
 {
@@ -169,7 +180,7 @@ void groove::addSongPlaylist()
 
 void groove::stop()
 {
-    player->stop();
+    player->pause();
 }
 void groove::moreB()
 {
@@ -179,6 +190,8 @@ void groove::progressUpdate(int p, qint64 d, qint64 t)
 {
     //if(!pd->isHidden())
     //{
+
+
         pd->setMaximum(t);
         pd->setValue(d);
     //}

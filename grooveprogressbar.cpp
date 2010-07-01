@@ -1,5 +1,7 @@
 #include "grooveprogressbar.h"
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include "qmaemo5rotator.h"
+#endif
 grooveProgressBar::grooveProgressBar(QWidget *parent) :
     QDialog(parent)
 {

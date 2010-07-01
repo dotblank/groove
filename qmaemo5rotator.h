@@ -1,6 +1,5 @@
 #ifndef QMAEMO5ROTATOR_H
 #define QMAEMO5ROTATOR_H
-
 //----------
 // Provides a means of WORKING automatic rotation for Maemo 5 apps. (The default Qt solution is buggy.)
 //----------
@@ -54,5 +53,4 @@ signals:
     void orientationChanged(Orientation orientation);
 
 };
-
 #endif // QMAEMO5ROTATOR_H
