@@ -73,15 +73,23 @@ void playlist::beginDownload(int position)
     req.setHeader(req.ContentTypeHeader,QVariant("application/x-www-form-urlencoded"));
     if(reply)
     {
-        reply->abort();
-        delete reply;
+        reply->disconnect();
+        reply->deleteLater();
     }
     reply = manager->post(req,QString("streamKey=" + pList->at(this->currentdownloaditem)->streamkey->toAscii()).toAscii());
     pList->at(this->currentdownloaditem)->buffer->open(QBuffer::ReadWrite | QBuffer::Truncate);
     connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(downloadSlot(qint64,qint64)));
     connect(reply,SIGNAL(finished()),this,SLOT(networkReplyFinish()));
     connect(this,SIGNAL(downloadComplete(int)),this,SLOT(downloadDone(int)));
+    connect(reply,SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(getNError(QNetworkReply::NetworkError)));
     startStreamT = QTime::currentTime();
+}
+void playlist::getNError(QNetworkReply::NetworkError error)
+{
+    qDebug() << "Network Error (if this is 99 then it will retry" << error;
+    if(error == QNetworkReply::UnknownNetworkError)
+        beginDownload(this->currentdownloaditem);
+
 }
 
 void playlist::setGscom(gscom *comm)
@@ -138,10 +146,17 @@ void playlist::networkReplyFinish()
         QNetworkRequest req;
         req.setUrl(url.toUrl());
         qDebug() << url;
+        if(reply)
+        {
+            reply->disconnect();
+            reply->deleteLater();
+        }
         reply = manager->get(req);
         startStreamT = QTime::currentTime();
         //connect(reply,SIGNAL(finished()),this,SLOT(start()));
         connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(downloadSlot(qint64,qint64)));
+        connect(reply,SIGNAL(finished()),this,SLOT(networkReplyFinish()));
+        connect(reply,SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(getNError(QNetworkReply::NetworkError)));
     }
 }
 

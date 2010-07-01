@@ -50,6 +50,7 @@ private slots:
     void downloadDone(int position);
     void skeyFound();
     void setBufferRdy(int b);
+    void getNError(QNetworkReply::NetworkError);
 private:
 
 
