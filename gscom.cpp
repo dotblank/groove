@@ -53,7 +53,7 @@ QStandardItemModel* gscom::getSongModel(QString song)
         jlist.insertMulti("header",header);
         QVariantMap param;
         param.insert("type","Songs");
-        param.insert("query",song.toAscii());
+        param.insert("query",song);
         jlist.insertMulti("parameters",param);
         QJson::Serializer *serializer = new QJson::Serializer();
         //qDebug() << serializer->serialize(jlist);
