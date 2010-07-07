@@ -2,7 +2,8 @@
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include "qmaemo5rotator.h"
 #endif
-
+#include <QtDBus>
+#include "bottombar.h"
 
 groove::groove(QWidget *parent) :
     QWidget(parent)
@@ -20,6 +21,7 @@ groove::groove(QWidget *parent) :
     QPushButton *stopButton = new QPushButton("Pause");
     QPushButton *moreButton = new QPushButton("...");
     QPushButton *nextB = new QPushButton("->");
+    topBar *ok = new topBar(this);
     resultView = new QTableView();
     QMenu *pushMenu = new QMenu();
     //showFullScreen();
@@ -63,16 +65,21 @@ groove::groove(QWidget *parent) :
     //this->setAttribute(Qt::WA_Maemo5AutoOrientation);
     layout->addWidget(lineEdit);
     layout->addWidget(button);
-    vlayout->addLayout(layout);
+    vlayout->addWidget(ok);
+    //vlayout->addLayout(layout);
     vlayout->addWidget(resultView);
-    vlayout->addLayout(bottomLayout);
+    //vlayout->addLayout(bottomLayout);
+    bottomBar *bBar = new bottomBar();
+    vlayout->addWidget(bBar);
+    vlayout->setSpacing(0);
     bottomLayout->addWidget(dButton);
     bottomLayout->addWidget(stopButton);
     bottomLayout->addWidget(nextB);
     bottomLayout->addWidget(moreButton);
     vlayout->setMenuBar(mBar);
+    vlayout->setContentsMargins(QMargins());
     setLayout(vlayout);
-    setWindowTitle("GrooveShark");
+    setWindowTitle("Groove");
     //Create New Grooveshark connection
     gs = new gscom();
     //Connections
@@ -93,7 +100,17 @@ groove::groove(QWidget *parent) :
     connect(pl,SIGNAL(freeze(bool)),pushMenu,SLOT(setDisabled(bool)));
     connect(pl,SIGNAL(freeze(bool)),dButton,SLOT(setDisabled(bool)));
     connect(nextB,SIGNAL(clicked()),player,SLOT(playNext()));
+    connect(ok,SIGNAL(changeTask()),this,SLOT(showOthers()));
+    connect(ok,SIGNAL(searchRequest(QString)),this,SLOT(performSearch(QString)));
+    connect(ok,SIGNAL(closeApp()),this,SLOT(close()));
+    connect(bBar,SIGNAL(addB()),this,SLOT(addSongPlaylist()));
 }
+void groove::performSearch(QString s)
+{
+    qDebug() << s;
+    resultView->setModel(gs->getSongModel(s));
+}
+
 void groove::search()
 {
     if(!lineEdit->text().isEmpty())
@@ -139,6 +156,13 @@ void groove::changeS( QAction * action)
     sMethod->setText(action->text());
     sMethod->setMaximumWidth(sMethod->sizeHint().rwidth());
 }
+void groove::showOthers()
+{
+    QDBusConnection c = QDBusConnection::sessionBus();
+    QDBusMessage m = QDBusMessage::createSignal("/", "com.nokia.hildon_desktop", "exit_app_view");
+    c.send(m);
+}
+
 void groove::play()
 {
     QModelIndexList selected = resultView->selectionModel()->selectedRows(0);

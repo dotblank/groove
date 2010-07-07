@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/groove/icons">
+        <file>groove.png</file>
+        <file>general_fullsize.png</file>
+        <file>general_search.png</file>
+        <file>wmTaskSwitcherIcon.png</file>
+        <file>wmTaskSwitcherIconHighlight.png</file>
+        <file>wmTaskSwitcherIconPressed.png</file>
+        <file>wmTaskModified.png</file>
+        <file>camera_camera_setting.png</file>
+        <file>camera_video_pause.png</file>
+        <file>camera_video_stop.png</file>
+        <file>general_back.png</file>
+        <file>general_forward.png</file>
+        <file>general_close.png</file>
+        <file>general_foldertree.png</file>
+        <file>general_add.png</file>
+    </qresource>
+</RCC>

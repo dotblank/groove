@@ -20,6 +20,7 @@ LIBS += -L/usr/local/lib -lqjson ##Armel Target
 #LIBS += -L../qjson/lib -lqjson ##X86 maemo
 QT += network
 QT += phonon
+QT += dbus
 # Input
 SOURCES += main.cpp \
     groove.cpp \
@@ -28,7 +29,10 @@ SOURCES += main.cpp \
     streamio.cpp \
     playlist.cpp \
     downloadmanager.cpp \
-    grooveprogressbar.cpp
+    grooveprogressbar.cpp \
+    topbar.cpp \
+    bottombar.cpp \
+    vkb.cpp
 
 HEADERS += \
     groove.h \
@@ -37,7 +41,10 @@ HEADERS += \
     streamio.h \
     playlist.h \
     downloadmanager.h \
-    grooveprogressbar.h
+    grooveprogressbar.h \
+    topbar.h \
+    bottombar.h \
+    vkb.h
 
 maemo5 {
 SOURCES += qmaemo5rotator.cpp
@@ -45,7 +52,9 @@ HEADERS += qmaemo5rotator.h
 }
 OTHER_FILES += \
     icon.svg \
-    groove.png
+    groove.png \
+    general_fullsize.png \
+    general_search.png
 unix {
   PREFIX = /usr
   BINDIR = $$PREFIX/bin
@@ -65,3 +74,11 @@ unix {
   icon64.path = $$DATADIR/icons/hicolor/64x64/apps
   icon64.files += groove.png
 }
+
+RESOURCES += \
+    res.qrc
+
+FORMS += \
+    topbar.ui \
+    bottombar.ui \
+    vkb.ui

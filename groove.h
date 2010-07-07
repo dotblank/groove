@@ -9,6 +9,8 @@
 #include <QMenuBar>
 #include "playlist.h"
 #include "grooveprogressbar.h"
+#include "topbar.h"
+#include "vkb.h"
 
 class groove : public QWidget
 {
@@ -26,9 +28,11 @@ public slots:
     void stop();
     void moreB();
     void orientationChanged();
+    void performSearch(QString);
 private slots:
     void progressUpdate(int,qint64,qint64);
     void addSongPlaylist();
+    void showOthers();
 private:
     sPlayer *player;
     QMenuBar *mBar;
