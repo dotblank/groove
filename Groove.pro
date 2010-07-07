@@ -54,7 +54,18 @@ OTHER_FILES += \
     icon.svg \
     groove.png \
     general_fullsize.png \
-    general_search.png
+    general_search.png \
+    wmTaskSwitcherIconPressed.png \
+    wmTaskSwitcherIconHighlight.png \
+    wmTaskSwitcherIcon.png \
+    general_forward.png \
+    general_foldertree.png \
+    general_close.png \
+    general_back.png \
+    general_add.png \
+    camera_video_stop.png \
+    camera_video_pause.png \
+    camera_camera_setting.png
 unix {
   PREFIX = /usr
   BINDIR = $$PREFIX/bin
