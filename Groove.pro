@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     grooveprogressbar.cpp \
     topbar.cpp \
     bottombar.cpp \
-    vkb.cpp
+    vkb.cpp \
+    searchresults.cpp
 
 HEADERS += \
     groove.h \
@@ -44,7 +45,8 @@ HEADERS += \
     grooveprogressbar.h \
     topbar.h \
     bottombar.h \
-    vkb.h
+    vkb.h \
+    searchresults.h
 
 maemo5 {
 SOURCES += qmaemo5rotator.cpp
@@ -93,4 +95,5 @@ RESOURCES += \
 FORMS += \
     topbar.ui \
     bottombar.ui \
-    vkb.ui
+    vkb.ui \
+    searchresults.ui

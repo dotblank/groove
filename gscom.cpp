@@ -174,6 +174,8 @@ void gscom::replyFinished(QNetworkReply *reply)
                 if(cookie.name() == "PHPSESSID")
                 {
                     phpSession = new QString(cookie.value());
+                    qDebug() << QDateTime::currentDateTime();
+                    qDebug() << cookie.expirationDate();
                 }
             }
             reply->readAll();
@@ -197,6 +199,7 @@ void gscom::replyFinished(QNetworkReply *reply)
                 sessionKey = new QString(result["result"].toString());
                 qDebug() << sessionKey->toAscii();
             }
+            qDebug() << result;
             currentaction = none;
             reply->close();
             emit finishedSearch();
@@ -216,6 +219,7 @@ void gscom::replyFinished(QNetworkReply *reply)
                 currentaction = getPHP;
                 manager->get(QNetworkRequest(QUrl(QString("http://") + GS_LISTEN)));
                 qDebug() << reply->readAll();
+                qDebug() << result;
                 reply->close();
                 return;
             }

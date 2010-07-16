@@ -2,6 +2,7 @@
 #define BOTTOMBAR_H
 
 #include <QWidget>
+#include <QDesktopWidget>
 
 namespace Ui {
     class bottomBar;

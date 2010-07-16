@@ -54,6 +54,7 @@ groove::groove(QWidget *parent) :
     resultView->setColumnHidden(2,true);
     resultView->setColumnHidden(3,true);
     resultView->setAutoScroll(false);
+    resultView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     /*QPalette pal = resultView->palette();
     pal.setBrush(QPalette::Highlight,QBrush(Qt::transparent,Qt::NoBrush));
     resultView->setPalette(pal);*/
