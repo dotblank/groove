@@ -105,6 +105,11 @@ groove::groove(QWidget *parent) :
     connect(ok,SIGNAL(searchRequest(QString)),this,SLOT(performSearch(QString)));
     connect(ok,SIGNAL(closeApp()),this,SLOT(close()));
     connect(bBar,SIGNAL(addB()),this,SLOT(addSongPlaylist()));
+    connect(bBar,SIGNAL(nextB()),player,SLOT(playNext()));
+    connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
+    connect(bBar,SIGNAL(back()),player,SLOT(back()));
+    bBar->setPlaybackProgress(80,100);
+
 }
 void groove::performSearch(QString s)
 {

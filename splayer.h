@@ -30,6 +30,7 @@ public slots:
     void playNext();
     void putb(int p,qint64,qint64);
     void abortDownload();
+    void back();
 private slots:
     void markComplete();
 private:

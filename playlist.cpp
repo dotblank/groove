@@ -17,6 +17,7 @@ void playlist::markPlayed(int position)
 }
 void playlist::freeMemory(int position)
 {
+   pList->at(position)->downloaded = false;
    delete pList->at(position)->buffer;
    pList->at(position)->buffer = new QBuffer();
 }
@@ -45,6 +46,8 @@ bool playlist::setCurrentPlaying(int position)
     if(pList->size() > position)
     {
         this->currentplayingitem = position;
+        if(!pList->at(position)->downloaded && this->currentdownloaditem != this->currentplayingitem)
+            this->beginDownload(position);
         /*if(pList->at(position)->bufferready == false &&)
         {
             if(!pList->at(position)->downloaded)

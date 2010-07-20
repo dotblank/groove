@@ -56,6 +56,19 @@ sPlayer::~sPlayer()
     //reply->~QIODevice();
     media->~MediaNode();
 }
+void sPlayer::back()
+{
+    media->stop();
+    if(pl->existAt(pl->currentplaying()-1))
+    {
+        pl->setCurrentPlaying(pl->currentplaying()-1);
+        if(pl->bReady(pl->currentplaying()))
+            this->start(pl->currentplaying());
+    }
+    else
+        pl->setCurrentPlaying(-1);
+}
+
 void sPlayer::abortDownload()
 {
     //pd->hide();
