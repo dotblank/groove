@@ -3,7 +3,6 @@
 #include "qmaemo5rotator.h"
 #endif
 #include <QtDBus>
-#include "bottombar.h"
 
 groove::groove(QWidget *parent) :
     QWidget(parent)
@@ -30,12 +29,10 @@ groove::groove(QWidget *parent) :
     pushMenu->addAction("Song:");
     //pushMenu->addAction("Artist:");
     //pushMenu->addAction("Album:");
-    pd = new grooveProgressBar(this);
-    pd->hide();
     QMenu *moreAction = new QMenu();
     //moreAction->addAction("Playlist");
     connect(moreAction->addAction("Play Now"),SIGNAL(triggered()),this,SLOT(play()));
-    connect(moreAction->addAction("Show download Progress"),SIGNAL(triggered()),pd,SLOT(show()));
+    //connect(moreAction->addAction("Show download Progress"),SIGNAL(triggered()),pd,SLOT(show()));
     moreButton->setMenu(moreAction);
 
     //sMethod->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Maximum);
@@ -70,7 +67,7 @@ groove::groove(QWidget *parent) :
     //vlayout->addLayout(layout);
     vlayout->addWidget(resultView);
     //vlayout->addLayout(bottomLayout);
-    bottomBar *bBar = new bottomBar();
+    bBar = new bottomBar();
     vlayout->addWidget(bBar);
     vlayout->setSpacing(0);
     bottomLayout->addWidget(dButton);
@@ -92,11 +89,11 @@ groove::groove(QWidget *parent) :
     connect(stopButton,SIGNAL(clicked()),this,SLOT(stop()));
     connect(moreButton,SIGNAL(clicked()),this,SLOT(moreB()));
     //connect(rotator,SIGNAL(orientationChanged(Orientation)),this,SLOT(orientationChanged()));
-    pl = new playlist();
+    pl = new playlist(this);
     pl->setGscom(gs);
     player->setPlaylist(pl);
     connect(pl,SIGNAL(downloadProgress(int,qint64,qint64)),this,SLOT(progressUpdate(int,qint64,qint64)));
-    connect(pl,SIGNAL(bufferReady(int)),pd,SLOT(close()));
+    //connect(pl,SIGNAL(bufferReady(int)),pd,SLOT(close()));
     connect(pl,SIGNAL(freeze(bool)),resultView,SLOT(setDisabled(bool)));
     connect(pl,SIGNAL(freeze(bool)),pushMenu,SLOT(setDisabled(bool)));
     connect(pl,SIGNAL(freeze(bool)),dButton,SLOT(setDisabled(bool)));
@@ -108,7 +105,7 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(nextB()),player,SLOT(playNext()));
     connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
-    bBar->setPlaybackProgress(80,100);
+    bBar->setPlaybackProgress(100,100);
 
 }
 void groove::performSearch(QString s)
@@ -179,9 +176,6 @@ void groove::play()
             return;
         //gs->getSong();
         player->play(pl->addSong(item));
-        pd->setMaximum(100);
-        pd->setValue(0);
-        pd->show();
     }
     //selected.
     //if
@@ -201,9 +195,6 @@ void groove::addSongPlaylist()
         }
         else
             pl->addSong(item);
-        pd->setMaximum(100);
-        pd->setValue(0);
-        pd->show();
         model->item(selected.first().row(),1)->setText("Added to Playlist");;
     }
 }
@@ -220,10 +211,7 @@ void groove::progressUpdate(int p, qint64 d, qint64 t)
 {
     //if(!pd->isHidden())
     //{
-
-
-        pd->setMaximum(t);
-        pd->setValue(d);
+    bBar->setPlaybackProgress(d,t);
     //}
 }
 

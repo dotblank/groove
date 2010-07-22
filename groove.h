@@ -11,6 +11,7 @@
 #include "grooveprogressbar.h"
 #include "topbar.h"
 #include "vkb.h"
+#include "bottombar.h"
 
 class groove : public QWidget
 {
@@ -34,6 +35,7 @@ private slots:
     void addSongPlaylist();
     void showOthers();
 private:
+    bottomBar *bBar;
     sPlayer *player;
     QMenuBar *mBar;
     QPushButton *sMethod;
@@ -47,7 +49,6 @@ private:
     QMaemo5Rotator *rot;
 #endif
     playlist *pl;
-    grooveProgressBar *pd;
 
 };
 

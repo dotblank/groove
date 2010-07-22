@@ -1,6 +1,7 @@
 #include "bottombar.h"
 #include "ui_bottombar.h"
 
+
 bottomBar::bottomBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::bottomBar)
@@ -20,10 +21,11 @@ bottomBar::~bottomBar()
 {
     delete ui;
 }
-void bottomBar::setPlaybackProgress(int min, int max)
+void bottomBar::setPlaybackProgress(qint64 min,qint64 max)
 {
-    this->playbackProgress->setRect(0,0,(min/max)*main->width(),15);
-    ui->graphicsView->update();
+
+    this->playbackProgress->setRect(0,0,((float)min/(float)max)*QApplication::desktop()->screenGeometry().width(),15);
+    //ui->graphicsView->update();
 }
 
 void bottomBar::on_nextB_clicked()

@@ -18,7 +18,7 @@ public:
     explicit bottomBar(QWidget *parent = 0);
     ~bottomBar();
 public slots:
-    void setPlaybackProgress(int min,int max);
+    void setPlaybackProgress(qint64 min,qint64 max);
 signals:
     void addB();
     void nextB();

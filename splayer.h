@@ -33,6 +33,7 @@ public slots:
     void back();
 private slots:
     void markComplete();
+    void updatePlayPosition(qint64 time);
 private:
     QNetworkAccessManager *manager;
     Phonon::AudioOutput *audioOutput;
@@ -45,5 +46,6 @@ private:
     QTime startStreamT;
     grooveProgressBar *pd;
     playlist *pl;
+
 };
 #endif // SPLAYER_H

@@ -18,11 +18,14 @@ void playlist::markPlayed(int position)
 void playlist::freeMemory(int position)
 {
    pList->at(position)->downloaded = false;
+   pList->at(position)->bufferready = false;
    delete pList->at(position)->buffer;
    pList->at(position)->buffer = new QBuffer();
 }
 bool playlist::existAt(int position)
 {
+    if(position < 0)
+        return false;
     return (pList->size() > position);
 }
 
@@ -43,7 +46,7 @@ void playlist::setBufferRdy(int b)
 }
 bool playlist::setCurrentPlaying(int position)
 {
-    if(pList->size() > position)
+    if(this->existAt(position))
     {
         this->currentplayingitem = position;
         if(!pList->at(position)->downloaded && this->currentdownloaditem != this->currentplayingitem)
@@ -59,7 +62,14 @@ bool playlist::setCurrentPlaying(int position)
         return true;
     }
     else
+    {
+    if(position = -1)
+        {
+        this->currentplayingitem = -1;
+    }
+    else
         return false;
+    }
 }
 QIODevice * playlist::getBuffer(int position)
 {
@@ -90,7 +100,7 @@ void playlist::beginDownload(int position)
 void playlist::getNError(QNetworkReply::NetworkError error)
 {
     qDebug() << "Network Error (if this is 99 then it will retry" << error;
-    if(error == QNetworkReply::UnknownNetworkError)
+    if(error == QNetworkReply::UnknownNetworkError && this->currentdownloaditem != -1)
         beginDownload(this->currentdownloaditem);
 
 }
@@ -134,7 +144,7 @@ int playlist::addSong(QStandardItem *item)
 
 void playlist::downloadDone(int position)
 {
-    if(this->existAt(position+1) && this->currentSkeyItem == -1)
+    if(this->existAt(position+1) && this->currentSkeyItem == -1 && !pList->at(position+1)->downloaded && this->currentdownloaditem != position+1)
         beginDownload(position+1);
     else
         this->currentdownloaditem = -1;

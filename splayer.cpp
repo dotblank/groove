@@ -13,6 +13,8 @@ sPlayer::sPlayer(QObject *parent) :
     internal = parent;
     //buffer->open(QIODevice::ReadWrite);
     connect(media,SIGNAL(finished()),this,SLOT(markComplete()));
+    media->setTickInterval(200);
+    connect(media,SIGNAL(tick(qint64)),this,SLOT(updatePlayPosition(qint64)));
 }
 void sPlayer::setPlaylist(playlist *playList)
 {
@@ -34,6 +36,11 @@ void sPlayer::markComplete()
     else
         pl->setCurrentPlaying(-1);
 }
+void sPlayer::updatePlayPosition(qint64 time)
+{
+    //qDebug() << time << ":" << media->totalTime();
+}
+
 void sPlayer::pause()
 {
     if(media->state() == Phonon::PausedState)
