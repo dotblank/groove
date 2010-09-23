@@ -47,7 +47,9 @@ QStandardItemModel* gscom::getSongModel(QString song)
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
         header.insert("client","gslite");
-        header.insert("clientRevision","20100412.09");
+        //header.insert("clientRevision","20100412.09");
+        header.insert("clientRevision","20100831.13");
+        header.insert("privacy",0);
         header.insert("token",token->toAscii());
         jlist.insert("method","getSearchResults");
         jlist.insertMulti("header",header);
@@ -87,7 +89,7 @@ QStandardItemModel* gscom::getArtistModel(QString song)
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
         header.insert("client","gslite");
-        header.insert("clientRevision","20100412.09");
+        header.insert("clientRevision","20100831.13");
         header.insert("token",token->toAscii());
         jlist.insert("method","getSearchResults");
         jlist.insertMulti("header",header);
@@ -127,7 +129,7 @@ QStandardItemModel* gscom::getAlbumModel(QString song)
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
         header.insert("client","gslite");
-        header.insert("clientRevision","20100412.09");
+        header.insert("clientRevision","20100831.13");
         header.insert("token",token->toAscii());
         jlist.insert("method","getSearchResults");
         jlist.insertMulti("header",header);
@@ -340,7 +342,7 @@ void gscom::getSong(QString songid)
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
         header.insert("client","gslite");
-        header.insert("clientRevision","20100412.09");
+        header.insert("clientRevision","20100831.13");
         header.insert("token",token->toAscii());
         jlist.insert("method","getStreamKeyFromSongIDEx");
         jlist.insertMulti("header",header);
@@ -374,7 +376,7 @@ void gscom::getSessionKey()
     //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
     //header.insert("session",phpSession->toUtf8());
     header.insert("client","gslite");
-    header.insert("clientRevision","20100412.09");
+    header.insert("clientRevision","20100831.13");
     jlist.insert("method","getCommunicationToken");
     jlist.insertMulti("header",header);
     QVariantMap param;
