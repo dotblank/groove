@@ -1,12 +1,15 @@
 #include "groove.h"
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include "qmaemo5rotator.h"
-#endif
 #include <QtDBus>
+#endif
+
 
 groove::groove(QWidget *parent) :
     QWidget(parent)
 {
+    //mpg = new mpgplayer();
+    //mpg->start();
     mBar = new QMenuBar();
     //mBar->addAction("test");
     sMethod = new QPushButton("Song:");
@@ -104,6 +107,7 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(addB()),this,SLOT(addSongPlaylist()));
     connect(bBar,SIGNAL(nextB()),player,SLOT(playNext()));
     connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
+
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
     bBar->setPlaybackProgress(100,100);
 
@@ -159,11 +163,15 @@ void groove::changeS( QAction * action)
     sMethod->setText(action->text());
     sMethod->setMaximumWidth(sMethod->sizeHint().rwidth());
 }
+
 void groove::showOthers()
 {
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     QDBusConnection c = QDBusConnection::sessionBus();
     QDBusMessage m = QDBusMessage::createSignal("/", "com.nokia.hildon_desktop", "exit_app_view");
+
     c.send(m);
+#endif
 }
 
 void groove::play()
@@ -202,6 +210,7 @@ void groove::addSongPlaylist()
 void groove::stop()
 {
     player->pause();
+    mpg->pause();
 }
 void groove::moreB()
 {

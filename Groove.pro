@@ -11,16 +11,16 @@ TARGET = groove
 #CONFIG += build_all
 DEPENDPATH += .
 INCLUDEPATH += .
-INCLUDEPATH += /usr/include/qjson
+INCLUDEPATH += /usr/include/qjson /usr/include
 #INCLUDEPATH += ../qjson/src/
 #INCLUDEPATH += ./src/
 #LIBS += -L/usr/lib -lqjson ##Desktop Target
-LIBS += -L/usr/local/lib -lqjson ##Armel Target
+LIBS += -L/usr/local/lib -lqjson -lmpg123 -lpulse-simple##Armel Target
 #LIBS += -L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson ##Armel Target SDK
 #LIBS += -L../qjson/lib -lqjson ##X86 maemo
 QT += network
 QT += phonon
-QT += dbus
+
 # Input
 SOURCES += main.cpp \
     groove.cpp \
@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     topbar.cpp \
     bottombar.cpp \
     vkb.cpp \
-    searchresults.cpp
+    searchresults.cpp \
+    mpgplayer.cpp
 
 HEADERS += \
     groove.h \
@@ -46,11 +47,13 @@ HEADERS += \
     topbar.h \
     bottombar.h \
     vkb.h \
-    searchresults.h
+    searchresults.h \
+    mpgplayer.h
 
 maemo5 {
 SOURCES += qmaemo5rotator.cpp
 HEADERS += qmaemo5rotator.h
+QT += dbus
 }
 OTHER_FILES += \
     icon.svg \

@@ -91,7 +91,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="stopButton">
        <property name="text">
         <string/>
        </property>
@@ -133,7 +133,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="settingsB">
        <property name="text">
         <string/>
        </property>

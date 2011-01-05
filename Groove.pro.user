@@ -13,9 +13,117 @@
  <data>
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">MeeGo</value>
+   <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Target.MeeGoDeviceTarget</value>
+   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">0</value>
+   <value key="ProjectExplorer.Target.ActiveRunConfiguration" type="int">0</value>
+   <valuemap key="ProjectExplorer.Target.BuildConfiguration.0" type="QVariantMap">
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">qmake</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
+     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList"/>
+    </valuemap>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.2" type="QVariantMap">
+     <value key="Packaging Enabled" type="bool">true</value>
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MeeGoPackageCreationStep</value>
+     <valuelist key="Qt4ProjectManager.BuildStep.MeeGoPackage.LocalFiles" type="QVariantList"/>
+     <value key="Qt4ProjectManager.BuildStep.MeeGoPackage.Modified" type="bool">true</value>
+     <value key="Qt4ProjectManager.BuildStep.MeeGoPackage.RemoteExe" type="QString">/usr/local/bin/groove</value>
+     <valuelist key="Qt4ProjectManager.BuildStep.MeeGoPackage.RemoteFiles" type="QVariantList"/>
+     <value key="Version Number" type="QString">0.0.1</value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">3</value>
+    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList">
+      <value type="QString">clean</value>
+     </valuelist>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
+    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
+    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Debug</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">2</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/home/eli/Projects/Groove-build-meego</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">6</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">12</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
+   </valuemap>
+   <valuemap key="ProjectExplorer.Target.BuildConfiguration.1" type="QVariantMap">
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">qmake</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
+     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList"/>
+    </valuemap>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.2" type="QVariantMap">
+     <value key="Packaging Enabled" type="bool">true</value>
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MeeGoPackageCreationStep</value>
+     <valuelist key="Qt4ProjectManager.BuildStep.MeeGoPackage.LocalFiles" type="QVariantList"/>
+     <value key="Qt4ProjectManager.BuildStep.MeeGoPackage.Modified" type="bool">true</value>
+     <value key="Qt4ProjectManager.BuildStep.MeeGoPackage.RemoteExe" type="QString"></value>
+     <valuelist key="Qt4ProjectManager.BuildStep.MeeGoPackage.RemoteFiles" type="QVariantList"/>
+     <value key="Version Number" type="QString">0.0.1</value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">3</value>
+    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList">
+      <value type="QString">clean</value>
+     </valuelist>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
+    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
+    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Release</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">0</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/home/eli/Projects/Groove-build-meego</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">6</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">12</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
+   </valuemap>
+   <value key="ProjectExplorer.Target.BuildConfigurationCount" type="int">2</value>
+   <valuemap key="ProjectExplorer.Target.RunConfiguration.0" type="QVariantMap">
+    <value key=".ProFile" type="QString">Groove.pro</value>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">New MeeGo Run Configuration</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MeeGoRunConfiguration</value>
+    <valuelist key="Qt4ProjectManager.MeeGoRunConfiguration.Arguments" type="QVariantList"/>
+    <valuemap key="Qt4ProjectManager.MeeGoRunConfiguration.DebuggingHelpersLastDeployed" type="QVariantMap"/>
+    <value key="Qt4ProjectManager.MeeGoRunConfiguration.DeviceId" type="qulonglong">4</value>
+    <valuemap key="Qt4ProjectManager.MeeGoRunConfiguration.LastDeployed" type="QVariantMap"/>
+   </valuemap>
+   <value key="ProjectExplorer.Target.RunConfigurationCount" type="int">1</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>ProjectExplorer.Project.Target.1</variable>
+  <valuemap type="QVariantMap">
    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Desktop</value>
    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Target.DesktopTarget</value>
-   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">0</value>
+   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">1</value>
    <value key="ProjectExplorer.Target.ActiveRunConfiguration" type="int">0</value>
    <valuemap key="ProjectExplorer.Target.BuildConfiguration.0" type="QVariantMap">
     <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
@@ -46,10 +154,10 @@
     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Debug</value>
     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">2</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/scratchbox/users/eli/home/eli/qt4/Groove</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">6</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/home/eli/Projects/Groove-build-desktop</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">2</value>
     <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">0</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">false</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
    </valuemap>
    <valuemap key="ProjectExplorer.Target.BuildConfiguration.1" type="QVariantMap">
     <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
@@ -80,10 +188,10 @@
     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Release</value>
     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">0</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/scratchbox/users/eli/home/eli/qt4/Groove</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">6</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/home/eli/Projects/Groove-build-desktop</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">4</value>
     <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">0</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">false</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
    </valuemap>
    <value key="ProjectExplorer.Target.BuildConfigurationCount" type="int">2</value>
    <valuemap key="ProjectExplorer.Target.RunConfiguration.0" type="QVariantMap">
@@ -98,67 +206,6 @@
     <value key="Qt4ProjectManager.Qt4RunConfiguration.UserSetName" type="bool">false</value>
     <value key="Qt4ProjectManager.Qt4RunConfiguration.UserSetWorkingDirectory" type="bool">false</value>
     <value key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory" type="QString"></value>
-   </valuemap>
-   <value key="ProjectExplorer.Target.RunConfigurationCount" type="int">1</value>
-  </valuemap>
- </data>
- <data>
-  <variable>ProjectExplorer.Project.Target.1</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Maemo</value>
-   <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Target.MaemoDeviceTarget</value>
-   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">0</value>
-   <value key="ProjectExplorer.Target.ActiveRunConfiguration" type="int">0</value>
-   <valuemap key="ProjectExplorer.Target.BuildConfiguration.0" type="QVariantMap">
-    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">qmake</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
-     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList">
-      <value type="QString">INCLUDEPATH+=../qjson/src LIBS+=-L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson</value>
-     </valuelist>
-    </valuemap>
-    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
-     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
-     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
-     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
-    </valuemap>
-    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">2</value>
-    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
-     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
-     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList">
-      <value type="QString">clean</value>
-     </valuelist>
-     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
-    </valuemap>
-    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
-    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
-    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
-    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Debug</value>
-    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">2</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/scratchbox/users/eli/home/eli/qt4/Groove-build</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">5</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">9</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
-   </valuemap>
-   <value key="ProjectExplorer.Target.BuildConfigurationCount" type="int">1</value>
-   <valuemap key="ProjectExplorer.Target.RunConfiguration.0" type="QVariantMap">
-    <value key=".ProFile" type="QString">Groove.pro</value>
-    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Groove on Maemo device</value>
-    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MaemoRunConfiguration</value>
-    <valuelist key="Qt4ProjectManager.MaemoRunConfiguration.Arguments" type="QVariantList"/>
-    <valuemap key="Qt4ProjectManager.MaemoRunConfiguration.DebuggingHelpersLastDeployed" type="QVariantMap">
-     <value key="192.168.1.4" type="QDateTime">2010-07-20T16:55:17</value>
-    </valuemap>
-    <value key="Qt4ProjectManager.MaemoRunConfiguration.DeviceId" type="qulonglong">1</value>
-    <valuemap key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployed" type="QVariantMap">
-     <value key="192.168.1.4" type="QDateTime">2010-07-21T16:20:24</value>
-    </valuemap>
-    <value key="Qt4ProjectManager.MaemoRunConfiguration.Simulator" type="QString"></value>
    </valuemap>
    <value key="ProjectExplorer.Target.RunConfigurationCount" type="int">1</value>
   </valuemap>

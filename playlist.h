@@ -30,7 +30,7 @@ public:
     void setGscom(gscom *comm);
     void freeMemory(int position);
     int currentplaying();
-    bool setCurrentPlaying(int position);
+    void setCurrentPlaying(int position);
     bool bReady(int b);
     int findFirstNotPlayed();
     void beginDownload(int position);

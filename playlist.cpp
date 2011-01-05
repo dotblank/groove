@@ -12,8 +12,11 @@ playlist::playlist(QObject *parent) :
 }
 void playlist::markPlayed(int position)
 {
-    pList->at(position)->played = true;
-    this->freeMemory(position);
+    if(0 <= position && position < pList->size())
+    {
+        pList->at(position)->played = true;
+        this->freeMemory(position);
+    }
 }
 void playlist::freeMemory(int position)
 {
@@ -44,7 +47,7 @@ void playlist::setBufferRdy(int b)
 {
     pList->at(b)->bufferready = true;
 }
-bool playlist::setCurrentPlaying(int position)
+void playlist::setCurrentPlaying(int position)
 {
     if(this->existAt(position))
     {
@@ -59,16 +62,16 @@ bool playlist::setCurrentPlaying(int position)
         else
             emit this->bufferReady(position);
         */
-        return true;
+        return;
     }
     else
     {
-    if(position = -1)
+    if(position == -1)
         {
         this->currentplayingitem = -1;
     }
     else
-        return false;
+        return;
     }
 }
 QIODevice * playlist::getBuffer(int position)

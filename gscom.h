@@ -14,6 +14,7 @@ class gscom : public QObject
 public:
     QUrl sku;
     QString streamID;
+    QString songToken;
     gscom();
     QStandardItemModel* getSongModel(QString song);
     QStandardItemModel* getArtistModel(QString artist);
@@ -37,6 +38,7 @@ private:
         getSearchResults,
         getStreamKeyFromSongIDEx,
         getPHP,
+        getTokenForForSong,
         none
     };
     gMETHOD currentaction;

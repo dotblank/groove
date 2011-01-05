@@ -3,6 +3,8 @@
 #include <serializer.h>
 #include <QCryptographicHash>
 //#include <QApplication>
+#define CVERSION "20100831"
+#define CLIENT "htmlshark"
 
 gscom::gscom()
 {
@@ -40,15 +42,15 @@ QStandardItemModel* gscom::getSongModel(QString song)
         QString *token = getToken(getSearchResults);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://cowbell.grooveshark.com/more.php?getSearchResults"));
+        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getSearchResults"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
-        header.insert("client","gslite");
+        header.insert("client",CLIENT);
         //header.insert("clientRevision","20100412.09");
-        header.insert("clientRevision","20100831.13");
+        header.insert("clientRevision",CVERSION);
         header.insert("privacy",0);
         header.insert("token",token->toAscii());
         jlist.insert("method","getSearchResults");
@@ -82,14 +84,14 @@ QStandardItemModel* gscom::getArtistModel(QString song)
         QString *token = getToken(getSearchResults);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://cowbell.grooveshark.com/more.php?getSearchResults"));
+        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getSearchResults"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
-        header.insert("client","gslite");
-        header.insert("clientRevision","20100831.13");
+        header.insert("client",CLIENT);
+        header.insert("clientRevision",CVERSION);
         header.insert("token",token->toAscii());
         jlist.insert("method","getSearchResults");
         jlist.insertMulti("header",header);
@@ -122,14 +124,14 @@ QStandardItemModel* gscom::getAlbumModel(QString song)
         QString *token = getToken(getSearchResults);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://cowbell.grooveshark.com/more.php?getSearchResults"));
+        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getSearchResults"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
         //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
         header.insert("session",phpSession->toUtf8());
-        header.insert("client","gslite");
-        header.insert("clientRevision","20100831.13");
+        header.insert("client",CLIENT);
+        header.insert("clientRevision",CVERSION);
         header.insert("token",token->toAscii());
         jlist.insert("method","getSearchResults");
         jlist.insertMulti("header",header);
@@ -149,12 +151,33 @@ void gscom::replyFinished(QNetworkReply *reply)
 {
     switch (currentaction)
     {
-    case getStreamKeyFromSongIDEx:
+    case getTokenForForSong:
         {
-            qDebug() << "tester";
+            qDebug() << "Recieved a Token Packet!";
             QJson::Parser parser;
             bool ok;
-            QVariantMap result = parser.parse (reply->readAll(), &ok).toMap();
+            QByteArray array = reply->readAll();
+            qDebug(array);
+            QVariantMap result = parser.parse (array, &ok).toMap();
+            if (!ok) {
+              qFatal("An error occurred during parsing");
+              return;
+            }
+            QVariantMap results = result["result"].toMap();
+            this->songToken = results["Token"].toString();
+            qDebug() << this->songToken;
+            currentaction = none;
+            reply->close();
+        }
+        break;
+    case getStreamKeyFromSongIDEx:
+        {
+            qDebug() << "Recieved a Stream Packet";
+            QJson::Parser parser;
+            bool ok;
+            QByteArray array = reply->readAll();
+            qDebug(array);
+            QVariantMap result = parser.parse (array, &ok).toMap();
             if (!ok) {
               qFatal("An error occurred during parsing");
               return;
@@ -162,6 +185,7 @@ void gscom::replyFinished(QNetworkReply *reply)
             QVariantMap results = result["result"].toMap();
             this->streamID = results["streamKey"].toString();
             this->sku = QUrl(QString("http://") + results["ip"].toString() + "/stream.php");
+            //qDebug() << results;
             qDebug() << sku;
             currentaction = none;
             reply->close();
@@ -193,7 +217,9 @@ void gscom::replyFinished(QNetworkReply *reply)
         {
             bool ok;
             QJson::Parser parser;
-            QVariantMap result = parser.parse(reply->readAll(),&ok).toMap();
+            QByteArray array = reply->readAll();
+            qDebug(array);
+            QVariantMap result = parser.parse(array,&ok).toMap();
             if(!ok)
                 qDebug("Error parsing request");
             else
@@ -307,6 +333,9 @@ QString* gscom::getToken(gMETHOD meth)
     case(getSearchResults):
         data->append("getSearchResults");
         break;
+    case(getTokenForForSong):
+        data->append("getTokenForForSong");
+        break;
     case(getStreamKeyFromSongIDEx):
         data->append("getStreamKeyFromSongIDEx");
         break;
@@ -335,24 +364,25 @@ void gscom::getSong(QString songid)
         QString *token = getToken(getStreamKeyFromSongIDEx);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://cowbell.grooveshark.com/more.php?getStreamKeyFromSongIdEx"));
+        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getStreamKeyFromSongIDEx"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
-        //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
-        header.insert("session",phpSession->toUtf8());
-        header.insert("client","gslite");
-        header.insert("clientRevision","20100831.13");
-        header.insert("token",token->toAscii());
-        jlist.insert("method","getStreamKeyFromSongIDEx");
-        jlist.insertMulti("header",header);
-        QVariantMap param;
         QVariantMap country;
         country.insert("CC1","0");
         country.insert("CC3","0");
         country.insert("ID","223");
         country.insert("CC2","0");
         country.insert("CC4","1073741824");
+        //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
+        header.insert("session",phpSession->toUtf8());
+        header.insert("client","jsqueue");
+        header.insert("clientRevision","20101012.37");
+        header.insert("token",token->toAscii());
+        header.insertMulti("country",country);
+        jlist.insert("method","getStreamKeyFromSongIDEx");
+        jlist.insertMulti("header",header);
+        QVariantMap param;
         param.insertMulti("country",country);
         param.insert("mobile",false);
         param.insert("songID",songid.toAscii());
@@ -368,15 +398,15 @@ void gscom::getSong(QString songid)
 
 void gscom::getSessionKey()
 {
-    QNetworkRequest request; // = new QNetworkRequest(QUrl("https://cowbell.grooveshark.com/service.php"));
-    request.setUrl(QUrl("https://cowbell.grooveshark.com/service.php"));
+    QNetworkRequest request; // = new QNetworkRequest(QUrl("https://listen.grooveshark.com/service.php"));
+    request.setUrl(QUrl("https://listen.grooveshark.com/more.php"));
     request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
     QVariantMap jlist;
     QVariantMap header;
     //header.insert("uuid","DEA8E133-2080-F666-4B38-9465187B20A9");
     //header.insert("session",phpSession->toUtf8());
-    header.insert("client","gslite");
-    header.insert("clientRevision","20100831.13");
+    header.insert("client",CLIENT);
+    header.insert("clientRevision",CVERSION);
     jlist.insert("method","getCommunicationToken");
     jlist.insertMulti("header",header);
     QVariantMap param;

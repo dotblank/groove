@@ -12,6 +12,7 @@
 #include "topbar.h"
 #include "vkb.h"
 #include "bottombar.h"
+#include "mpgplayer.h"
 
 class groove : public QWidget
 {
@@ -35,6 +36,7 @@ private slots:
     void addSongPlaylist();
     void showOthers();
 private:
+    mpgplayer *mpg;
     bottomBar *bBar;
     sPlayer *player;
     QMenuBar *mBar;

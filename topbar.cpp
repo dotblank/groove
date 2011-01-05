@@ -42,6 +42,7 @@ void topBar::resizeEvent(QResizeEvent *e)
 {
     if(e->type() == QEvent::Resize)
     {
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
         if(((QWidget *)this->parent())->testAttribute(Qt::WA_Maemo5PortraitOrientation))
         {
             ui->sBox->setReadOnly(true);
@@ -49,6 +50,7 @@ void topBar::resizeEvent(QResizeEvent *e)
         }
         else
             ui->sBox->setReadOnly(false);
+#endif
     }
 }
 
@@ -66,4 +68,5 @@ bool topBar::eventFilter(QObject *obj, QEvent *e)
     }
     else
         return QWidget::eventFilter(obj,e);
+    return true;
 }
