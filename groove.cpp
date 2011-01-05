@@ -110,6 +110,8 @@ groove::groove(QWidget *parent) :
 
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
     bBar->setPlaybackProgress(100,100);
+    //pwindow = new pListWin(0);
+    //pwindow->show();
 
 }
 void groove::performSearch(QString s)
@@ -205,12 +207,13 @@ void groove::addSongPlaylist()
             pl->addSong(item);
         model->item(selected.first().row(),1)->setText("Added to Playlist");;
     }
+    //pwindow->updateList();
 }
 
 void groove::stop()
 {
     player->pause();
-    mpg->pause();
+    //mpg->pause();
 }
 void groove::moreB()
 {

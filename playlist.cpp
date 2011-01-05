@@ -10,6 +10,11 @@ playlist::playlist(QObject *parent) :
    this->currentSkeyItem = -1;
    this->reply = NULL;
 }
+QList<playlist::songElement *>* playlist::getList()
+{
+    return pList;
+}
+
 void playlist::markPlayed(int position)
 {
     if(0 <= position && position < pList->size())

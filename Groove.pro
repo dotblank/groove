@@ -15,7 +15,7 @@ INCLUDEPATH += /usr/include/qjson /usr/include
 #INCLUDEPATH += ../qjson/src/
 #INCLUDEPATH += ./src/
 #LIBS += -L/usr/lib -lqjson ##Desktop Target
-LIBS += -L/usr/local/lib -lqjson -lmpg123 -lpulse-simple##Armel Target
+LIBS += -L/usr/local/lib -lqjson -lpulse-simple##Armel Target
 #LIBS += -L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson ##Armel Target SDK
 #LIBS += -L../qjson/lib -lqjson ##X86 maemo
 QT += network
@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     bottombar.cpp \
     vkb.cpp \
     searchresults.cpp \
-    mpgplayer.cpp
+##  mpgplayer.cpp
+    plistwin.cpp
 
 HEADERS += \
     groove.h \
@@ -48,7 +49,8 @@ HEADERS += \
     bottombar.h \
     vkb.h \
     searchresults.h \
-    mpgplayer.h
+##    mpgplayer.h
+    plistwin.h
 
 maemo5 {
 SOURCES += qmaemo5rotator.cpp

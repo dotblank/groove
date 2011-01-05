@@ -12,12 +12,30 @@ class playlist : public QObject
 {
     Q_OBJECT
 public:
+    enum elementType
+    {
+        EStream = 1,
+        EFile = 2,
+    };
     enum failType
     {
         none = 0,
         Aborted = 1,
         Other =2
     };
+    struct songElement
+    {
+        QString *songId;
+        QString *streamkey;
+        QUrl *server;
+        QBuffer *buffer;
+        QIODevice *data;
+        elementType type;
+        bool downloaded;
+        bool played;
+        bool bufferready;
+    };
+    QList<songElement *>* getList();
     explicit playlist(QObject *parent = 0);
     int addSong(QStandardItem *item);
     QList<QStandardItem *> getPlaylist();
@@ -54,24 +72,9 @@ private slots:
 private:
 
 
-    enum elementType
-    {
-        EStream = 1,
-        EFile = 2,
-    };
 
-    struct songElement
-    {
-        QString *songId;
-        QString *streamkey;
-        QUrl *server;
-        QBuffer *buffer;
-        QIODevice *data;
-        elementType type;
-        bool downloaded;
-        bool played;
-        bool bufferready;
-    };
+
+
     int currentplayingitem;
     int currentSkeyItem;
     QList<songElement *> *pList;

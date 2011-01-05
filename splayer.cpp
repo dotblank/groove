@@ -1,4 +1,4 @@
-#include "mpgplayer.h"
+#include "splayer.h"
 #include <QFile>
 sPlayer::sPlayer(QObject *parent) :
     QObject(parent)

@@ -12,7 +12,8 @@
 #include "topbar.h"
 #include "vkb.h"
 #include "bottombar.h"
-#include "mpgplayer.h"
+//#include "mpgplayer.h"
+#include "plistwin.h"
 
 class groove : public QWidget
 {
@@ -36,7 +37,7 @@ private slots:
     void addSongPlaylist();
     void showOthers();
 private:
-    mpgplayer *mpg;
+    //mpgplayer *mpg;
     bottomBar *bBar;
     sPlayer *player;
     QMenuBar *mBar;
@@ -47,6 +48,7 @@ private:
     QPushButton *button;
     bool portrait;
     gscom *gs;
+    pListWin *pwindow;
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     QMaemo5Rotator *rot;
 #endif
