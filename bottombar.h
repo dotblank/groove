@@ -32,6 +32,7 @@ private slots:
     void on_pauseB_clicked();
     void on_backB_clicked();
 
+
 private:
     Ui::bottomBar *ui;
     QGraphicsRectItem *playbackProgress;

@@ -52,6 +52,12 @@
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="interactive">
       <bool>false</bool>
      </property>

@@ -7,14 +7,13 @@ bottomBar::bottomBar(QWidget *parent) :
     ui(new Ui::bottomBar)
 {
     ui->setupUi(this);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    main = new QGraphicsScene(0,0,screenGeometry.width(),15);
+    main = new QGraphicsScene(0,0,this->width(),15);
     ui->graphicsView->setScene(main);
-    ui->graphicsView->setSceneRect(0,0,screenGeometry.width(),15);
-    ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setSceneRect(0,0,this->width(),15);
+    //ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
     main->setBackgroundBrush(this->palette().window());
-    main->setSceneRect(0,0,screenGeometry.width(),15);
-    this->playbackProgress = main->addRect(0,0,screenGeometry.width()/2,15,QPen(Qt::white),QBrush(Qt::white));
+    main->setSceneRect(0,0,this->width(),15);
+    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white));
 #ifndef Q_WS_MAEMO_5
     ui->stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
     ui->pauseB->setIcon(QIcon::fromTheme("media-playback-pause"));
@@ -32,7 +31,7 @@ bottomBar::~bottomBar()
 void bottomBar::setPlaybackProgress(qint64 min,qint64 max)
 {
 
-    this->playbackProgress->setRect(0,0,((float)min/(float)max)*QApplication::desktop()->screenGeometry().width(),15);
+    this->playbackProgress->setRect(0,0,((float)min/(float)max)*this->width(),15);
     //ui->graphicsView->update();
 }
 
