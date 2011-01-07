@@ -112,6 +112,9 @@ groove::groove(QWidget *parent) :
     bBar->setPlaybackProgress(100,100);
     pwindow = new pWin();
     pwindow->show();
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
+    pwindow->setParent(this,Qt::WA_Maemo5StackedWindow);
+#endif
 
 }
 void groove::performSearch(QString s)
