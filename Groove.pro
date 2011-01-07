@@ -34,8 +34,8 @@ SOURCES += main.cpp \
     bottombar.cpp \
     vkb.cpp \
     searchresults.cpp \
+    pwin.cpp
 ##  mpgplayer.cpp
-    plistwin.cpp
 
 HEADERS += \
     groove.h \
@@ -49,8 +49,8 @@ HEADERS += \
     bottombar.h \
     vkb.h \
     searchresults.h \
+    pwin.h
 ##    mpgplayer.h
-    plistwin.h
 
 maemo5 {
 SOURCES += qmaemo5rotator.cpp
@@ -101,4 +101,5 @@ FORMS += \
     topbar.ui \
     bottombar.ui \
     vkb.ui \
-    searchresults.ui
+    searchresults.ui \
+    pwin.ui

@@ -13,7 +13,7 @@
 #include "vkb.h"
 #include "bottombar.h"
 //#include "mpgplayer.h"
-#include "plistwin.h"
+#include "pwin.h"
 
 class groove : public QWidget
 {
@@ -48,7 +48,7 @@ private:
     QPushButton *button;
     bool portrait;
     gscom *gs;
-    pListWin *pwindow;
+    pWin *pwindow;
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     QMaemo5Rotator *rot;
 #endif
