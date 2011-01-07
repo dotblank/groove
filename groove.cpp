@@ -113,7 +113,8 @@ groove::groove(QWidget *parent) :
     pwindow = new pWin();
     pwindow->show();
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
-    pwindow->setParent(this,Qt::WA_Maemo5StackedWindow);
+    pwindow->setParent(this)
+    pwindow->setWindowFlags(Qt::WA_Maemo5StackedWindow);
 #endif
 
 }
