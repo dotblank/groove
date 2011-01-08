@@ -14,7 +14,7 @@ bottomBar::bottomBar(QWidget *parent) :
     main->setBackgroundBrush(this->palette().window());
     main->setSceneRect(0,0,this->width(),15);
 
-#ifndef Q_WS_MAEMO_5
+//#ifndef Q_WS_MAEMO_5
     QBrush k = QApplication::palette().highlight();
     this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(k.color()),QBrush(k));
     ui->stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
@@ -22,9 +22,9 @@ bottomBar::bottomBar(QWidget *parent) :
     ui->nextB->setIcon(QIcon::fromTheme("media-skip-forward"));
     ui->backB->setIcon(QIcon::fromTheme("media-skip-backward"));
     ui->settingsB->setIcon(QIcon::fromTheme("document-properties"));
-#else
-    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white));
-#endif
+//#else
+//    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white);
+//#endif
 }
 
 bottomBar::~bottomBar()

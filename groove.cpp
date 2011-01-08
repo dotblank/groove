@@ -17,7 +17,7 @@ groove::groove(QWidget *parent) :
     player = new sPlayer();
     QHBoxLayout *layout = new QHBoxLayout();
     QVBoxLayout *vlayout = new QVBoxLayout();
-    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    //QHBoxLayout *bottomLayout = new QHBoxLayout();
     button = new QPushButton("Search");
     QPushButton *dButton = new QPushButton("Queue");
     QPushButton *stopButton = new QPushButton("Pause");
@@ -76,12 +76,13 @@ groove::groove(QWidget *parent) :
     bBar = new bottomBar();
     vlayout->setSpacing(0);
     vlayout->setMargin(0);
+    vlayout->setContentsMargins(QMargins(0,0,0,0));
     vlayout->addWidget(bBar);
 
-    bottomLayout->addWidget(dButton);
+    /*bottomLayout->addWidget(dButton);
     bottomLayout->addWidget(stopButton);
     bottomLayout->addWidget(nextB);
-    bottomLayout->addWidget(moreButton);
+    bottomLayout->addWidget(moreButton);*/
     vlayout->setMenuBar(mBar);
     vlayout->setContentsMargins(QMargins());
     setLayout(vlayout);
