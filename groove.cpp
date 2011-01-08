@@ -115,6 +115,7 @@ groove::groove(QWidget *parent) :
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     this->setAttribute(Qt::WA_Maemo5StackedWindow);
     pwindow->setParent(this);
+    pwindow->setWindowFlags(pwindow->windowFlags() | Qt::Window);
     pwindow->setAttribute(Qt::WA_Maemo5StackedWindow);
 #endif
 
