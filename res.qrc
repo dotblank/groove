@@ -15,5 +15,7 @@
         <file>general_close.png</file>
         <file>general_foldertree.png</file>
         <file>general_add.png</file>
+        <file>general_up.png</file>
+        <file>general_down.png</file>
     </qresource>
 </RCC>

@@ -73,7 +73,9 @@ OTHER_FILES += \
     camera_video_stop.png \
     camera_video_pause.png \
     camera_camera_setting.png \
-    wmTaskModified.png
+    wmTaskModified.png \
+    general_up.png \
+    general_down.png
 unix {
   PREFIX = /usr
   BINDIR = $$PREFIX/bin
