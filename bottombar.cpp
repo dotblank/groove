@@ -11,6 +11,7 @@ bottomBar::bottomBar(QWidget *parent) :
     ui->graphicsView->setScene(main);
     ui->graphicsView->setSceneRect(0,0,this->width(),15);
     ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop);
     main->setBackgroundBrush(this->palette().window());
     main->setSceneRect(0,0,this->width(),15);
     ui->verticalLayout->setContentsMargins(QMargins());
