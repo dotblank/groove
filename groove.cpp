@@ -114,7 +114,7 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
 
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
-    bBar->setPlaybackProgress(0,100);
+    bBar->setPlaybackProgress(100,100);
     pwindow = new pWin();
     stack->addWidget(pwindow);
     stack->setCurrentWidget(resultView);
@@ -172,8 +172,8 @@ void groove::finishedS()
     model = gs->getModel();
     resultView->setModel(model);
     button->setText("Search");
-    resultView->setColumnWidth(0,resultView->viewport()->width()/2);
-    resultView->setColumnWidth(1,resultView->viewport()->width()/2);
+    resultView->setColumnWidth(0,resultView->maximumViewportSize().width()/2);
+    resultView->setColumnWidth(1,resultView->maximumViewportSize().width()/2);
     lineEdit->setDisabled(false);
     resultView->setColumnHidden(2,true);
 }
@@ -243,6 +243,16 @@ void groove::progressUpdate(int p, qint64 d, qint64 t)
     //{
     bBar->setPlaybackProgress(d,t);
     //}
+}
+void groove::resizeEvent(QResizeEvent *)
+{
+    if(resultView->isColumnHidden(2))
+    {
+    resultView->setColumnWidth(0,resultView->maximumViewportSize().width()/2);
+    resultView->setColumnWidth(1,resultView->maximumViewportSize().width()/2);
+    }
+    else
+        resultView->setColumnWidth(0,resultView->maximumViewportSize().width());
 }
 
 void groove::orientationChanged()

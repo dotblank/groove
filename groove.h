@@ -38,6 +38,7 @@ private slots:
     void showOthers();
     void togglePlaylist();
 private:
+    void resizeEvent(QResizeEvent *);
     //mpgplayer *mpg;
     bottomBar *bBar;
     sPlayer *player;
