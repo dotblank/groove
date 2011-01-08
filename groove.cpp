@@ -67,6 +67,8 @@ groove::groove(QWidget *parent) :
     layout->addWidget(lineEdit);
     layout->addWidget(button);
     vlayout->setContentsMargins(QMargins(0,0,0,0));
+    vlayout->setMargin(0);
+    vlayout->setSpacing(0);
     vlayout->addWidget(ok);
     //vlayout->addLayout(layout);
     stack = new QStackedWidget();
@@ -82,7 +84,6 @@ groove::groove(QWidget *parent) :
     bottomLayout->addWidget(nextB);
     bottomLayout->addWidget(moreButton);*/
     vlayout->setMenuBar(mBar);
-    vlayout->setContentsMargins(QMargins(0,0,0,0));
     setLayout(vlayout);
     setWindowTitle("Groove");
     //Create New Grooveshark connection
@@ -113,7 +114,7 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
 
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
-    bBar->setPlaybackProgress(100,100);
+    bBar->setPlaybackProgress(0,100);
     pwindow = new pWin();
     stack->addWidget(pwindow);
     stack->setCurrentWidget(resultView);
