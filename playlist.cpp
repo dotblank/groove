@@ -35,6 +35,18 @@ QVariant playlist::data(const QModelIndex &index, int role) const
             default:
                 dat = QVariant();
             }
+        } else if (role == Qt::ForegroundRole) {
+            switch(index.column())
+            {
+            case sName:
+                if(!play->pList->at(index.row())->downloaded)
+                    dat = QVariant(Qt::gray);
+                else
+                    dat = QVariant();
+                break;
+            default:
+                dat = QVariant();
+            }
         } else if (role == Qt::DisplayRole) {
             switch(index.column())
             {
