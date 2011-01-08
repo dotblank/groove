@@ -74,9 +74,6 @@ groove::groove(QWidget *parent) :
     vlayout->addWidget(stack);
     //vlayout->addLayout(bottomLayout);
     bBar = new bottomBar();
-    vlayout->setSpacing(0);
-    vlayout->setMargin(0);
-    vlayout->setContentsMargins(QMargins(0,0,0,0));
     vlayout->addWidget(bBar);
 
     /*bottomLayout->addWidget(dButton);
