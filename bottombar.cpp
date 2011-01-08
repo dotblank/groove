@@ -23,8 +23,7 @@ bottomBar::bottomBar(QWidget *parent) :
     ui->backB->setIcon(QIcon::fromTheme("media-skip-backward"));
     ui->settingsB->setIcon(QIcon::fromTheme("document-properties"));
 #else
-
-    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white);
+    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white));
 #endif
 }
 
