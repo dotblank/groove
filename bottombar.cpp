@@ -10,10 +10,10 @@ bottomBar::bottomBar(QWidget *parent) :
     main = new QGraphicsScene(0,0,this->width(),15);
     ui->graphicsView->setScene(main);
     ui->graphicsView->setSceneRect(0,0,this->width(),15);
-    //ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
     main->setBackgroundBrush(this->palette().window());
     main->setSceneRect(0,0,this->width(),15);
-    //ui->verticalLayout->setContentsMargins(QMargins());
+    ui->verticalLayout->setContentsMargins(QMargins());
     //ui->verticalLayout->setSpacing(0);
 
 #ifndef Q_WS_MAEMO_5
