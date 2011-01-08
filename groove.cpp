@@ -119,6 +119,7 @@ groove::groove(QWidget *parent) :
     stack->addWidget(pwindow);
     stack->setCurrentWidget(resultView);
     connect(bBar,SIGNAL(list()),this,SLOT(togglePlaylist()));
+    pwindow->setModel(pl);
 
 }
 void groove::togglePlaylist()
@@ -133,6 +134,7 @@ void groove::performSearch(QString s)
 {
     qDebug() << s;
     resultView->setModel(gs->getSongModel(s));
+    this->stack->setCurrentWidget(this->resultView);
 }
 
 void groove::search()
@@ -200,7 +202,7 @@ void groove::play()
         if(item == 0)
             return;
         //gs->getSong();
-        player->play(pl->addSong(item));
+        player->play(pl->addSong(item,model->item(selected.first().row(),0)->text()));
     }
     //selected.
     //if
@@ -216,12 +218,12 @@ void groove::addSongPlaylist()
         //gs->getSong();
         if(pl->currentplaying() == -1)
         {
-            player->play(pl->addSong(item));
+            player->play(pl->addSong(item,model->item(selected.first().row(),0)->text()));
         }
         else
-            pl->addSong(item);
+            pl->addSong(item,model->item(selected.first().row(),0)->text());
         model->item(selected.first().row(),1)->setText("Added to Playlist");;
-        pwindow->addSong(model->item(selected.first().row(),0)->text());
+        //pwindow->addSong(model->item(selected.first().row(),0)->text());
     }
 
 }

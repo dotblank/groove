@@ -15,31 +15,10 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QListWidget" name="listWidget">
-     <property name="dragDropMode">
-      <enum>QAbstractItemView::InternalMove</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <item>
-      <property name="text">
-       <string>New Item</string>
-      </property>
-      <property name="icon">
-       <iconset resource="res.qrc">
-        <normaloff>:/groove/icons/general_forward.png</normaloff>:/groove/icons/general_forward.png</iconset>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout"/>
+    <widget class="QTableView" name="tabv"/>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
