@@ -52,6 +52,10 @@ void bottomBar::on_backB_clicked()
 {
     emit this->back();
 }
+void bottomBar::on_list_clicked()
+{
+    emit this->list();
+}
 
 void bottomBar::changeEvent(QEvent *e)
 {

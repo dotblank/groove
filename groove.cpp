@@ -118,6 +118,7 @@ groove::groove(QWidget *parent) :
     pwindow->setWindowFlags(pwindow->windowFlags() | Qt::Window);
     pwindow->setAttribute(Qt::WA_Maemo5StackedWindow);
 #endif
+    connect(bBar,SIGNAL(list()),pwindow,SLOT(show()));
     pwindow->show();
 
 }
