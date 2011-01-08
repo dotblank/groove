@@ -13,8 +13,8 @@ bottomBar::bottomBar(QWidget *parent) :
     //ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
     main->setBackgroundBrush(this->palette().window());
     main->setSceneRect(0,0,this->width(),15);
-    ui->verticalLayout->setContentsMargins(QMargins());
-    ui->verticalLayout->setSpacing(0);
+    //ui->verticalLayout->setContentsMargins(QMargins());
+    //ui->verticalLayout->setSpacing(0);
 
 #ifndef Q_WS_MAEMO_5
     QBrush k = QApplication::palette().highlight();

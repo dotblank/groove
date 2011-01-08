@@ -66,6 +66,7 @@ groove::groove(QWidget *parent) :
     //this->setAttribute(Qt::WA_Maemo5AutoOrientation);
     layout->addWidget(lineEdit);
     layout->addWidget(button);
+    vlayout->setContentsMargins(QMargins(0,0,0,0));
     vlayout->addWidget(ok);
     //vlayout->addLayout(layout);
     stack = new QStackedWidget();
@@ -81,7 +82,7 @@ groove::groove(QWidget *parent) :
     bottomLayout->addWidget(nextB);
     bottomLayout->addWidget(moreButton);*/
     vlayout->setMenuBar(mBar);
-    vlayout->setContentsMargins(QMargins());
+    vlayout->setContentsMargins(QMargins(0,0,0,0));
     setLayout(vlayout);
     setWindowTitle("Groove");
     //Create New Grooveshark connection
