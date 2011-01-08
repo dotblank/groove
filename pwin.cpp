@@ -25,4 +25,9 @@ void pWin::setModel(QAbstractItemModel *m)
     }
     //Only show the song name column
     ui->tabv->showColumn(playlist::sName);
+    ui->tabv->setColumnWidth(playlist::sName,ui->tabv->width());
+}
+void pWin::resizeEvent(QResizeEvent *)
+{
+    ui->tabv->setColumnWidth(playlist::sName,ui->tabv->maximumViewportSize().width());
 }

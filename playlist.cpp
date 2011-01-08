@@ -21,7 +21,7 @@ QVariant playlist::data(const QModelIndex &index, int role) const
         if (!index.isValid())
             return QVariant();
         if (role == Qt::TextAlignmentRole) {
-            return int(Qt::AlignRight | Qt::AlignVCenter);
+            return int(Qt::AlignLeft | Qt::AlignVCenter);
         } else if (role == Qt::DisplayRole) {
             switch(index.column())
             {
