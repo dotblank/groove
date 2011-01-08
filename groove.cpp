@@ -68,14 +68,16 @@ groove::groove(QWidget *parent) :
     layout->addWidget(button);
     vlayout->addWidget(ok);
     //vlayout->addLayout(layout);
-    QTabWidget *tab = new QTabWidget();
-    tab->addTab(resultView,"Search Results");
+    stack = new QStackedWidget();
+    stack->addWidget(resultView);
 
-    vlayout->addWidget(tab);
+    vlayout->addWidget(stack);
     //vlayout->addLayout(bottomLayout);
     bBar = new bottomBar();
-    vlayout->addWidget(bBar);
     vlayout->setSpacing(0);
+    vlayout->setMargin(0);
+    vlayout->addWidget(bBar);
+
     bottomLayout->addWidget(dButton);
     bottomLayout->addWidget(stopButton);
     bottomLayout->addWidget(nextB);
@@ -114,9 +116,19 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
     bBar->setPlaybackProgress(100,100);
     pwindow = new pWin();
-    tab->addTab(pwindow,"Playlist");
+    stack->addWidget(pwindow);
+    stack->setCurrentWidget(resultView);
+    connect(bBar,SIGNAL(list()),this,SLOT(togglePlaylist()));
 
 }
+void groove::togglePlaylist()
+{
+    if(stack->currentWidget()==pwindow)
+        stack->setCurrentWidget(resultView);
+    else
+        stack->setCurrentWidget(pwindow);
+}
+
 void groove::performSearch(QString s)
 {
     qDebug() << s;

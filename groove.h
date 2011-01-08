@@ -36,6 +36,7 @@ private slots:
     void progressUpdate(int,qint64,qint64);
     void addSongPlaylist();
     void showOthers();
+    void togglePlaylist();
 private:
     //mpgplayer *mpg;
     bottomBar *bBar;
@@ -49,6 +50,7 @@ private:
     bool portrait;
     gscom *gs;
     pWin *pwindow;
+    QStackedWidget *stack;
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     QMaemo5Rotator *rot;
 #endif
