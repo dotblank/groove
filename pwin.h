@@ -19,6 +19,7 @@ public:
 
 private:
     void resizeEvent(QResizeEvent *);
+
     Ui::pWin *ui;
 };
 

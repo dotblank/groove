@@ -9,6 +9,7 @@ playlist::playlist(QObject *parent) :
    this->currentplayingitem = -1;
    this->currentSkeyItem = -1;
    this->reply = NULL;
+   icon = new QIcon(":/groove/icons/general_forward.png");
 }
 
 //Implemented model class information
@@ -22,6 +23,18 @@ QVariant playlist::data(const QModelIndex &index, int role) const
             return QVariant();
         if (role == Qt::TextAlignmentRole) {
             return int(Qt::AlignLeft | Qt::AlignVCenter);
+        } else if (role == Qt::DecorationRole) {
+            switch(index.column())
+            {
+            case sName:
+                if(play->currentplaying()==index.row())
+                    dat = QVariant(*play->icon);
+                else
+                    dat = QVariant();
+                break;
+            default:
+                dat = QVariant();
+            }
         } else if (role == Qt::DisplayRole) {
             switch(index.column())
             {

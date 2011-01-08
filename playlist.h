@@ -25,9 +25,10 @@ public:
     };
     //this Enum MUST BE sequantial
     //And when changed must update the length
-#define PLAYLISTENUMS 8
+#define PLAYLISTENUMS 9
     enum coulmnStruct
     {
+        sPlaying,
         sName,
         sID,
         sKey,
@@ -35,7 +36,7 @@ public:
         sBuff,
         sDownloaded,
         sPlayed,
-        sReady,
+        sReady
     };
 
     struct songElement
@@ -106,6 +107,7 @@ private:
     int currentdownloaditem;
     gscom *gs;
     QTime startStreamT;
+    QIcon *icon;
 };
 
 #endif // PLAYLIST_H
