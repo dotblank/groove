@@ -67,7 +67,7 @@ groove::groove(QWidget *parent) :
     layout->addWidget(lineEdit);
     layout->addWidget(button);
     vlayout->setContentsMargins(QMargins(0,0,0,0));
-    vlayout->setMargin(0);
+    //vlayout->setMargin(0);
     vlayout->setSpacing(0);
     vlayout->addWidget(ok);
     //vlayout->addLayout(layout);
