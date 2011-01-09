@@ -10,7 +10,7 @@ playlist::playlist(QObject *parent) :
    this->currentSkeyItem = -1;
    this->reply = NULL;
    invalid = new QVariant();
-   icon = new QIcon(":/groove/icons/general_forward.png");
+   icon = new QVariant(QIcon(":/groove/icons/general_forward.png"));
 }
 
 //Implemented model class information
@@ -30,7 +30,7 @@ QVariant playlist::data(const QModelIndex &index, int role) const
             {
             case sName:
                 if(play->currentplaying()==index.row())
-                    dat = QVariant(*play->icon);
+                    dat = *play->icon;
                 else
                     dat = *play->invalid;
                 break;

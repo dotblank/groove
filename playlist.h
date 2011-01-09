@@ -107,7 +107,7 @@ private:
     int currentdownloaditem;
     gscom *gs;
     QTime startStreamT;
-    QIcon *icon;
+    QVariant *icon;
     QVariant *invalid;
 };
 
