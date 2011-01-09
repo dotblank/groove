@@ -9,18 +9,19 @@ playlist::playlist(QObject *parent) :
    this->currentplayingitem = -1;
    this->currentSkeyItem = -1;
    this->reply = NULL;
+   invalid = new QVariant();
    icon = new QIcon(":/groove/icons/general_forward.png");
 }
 
 //Implemented model class information
 QVariant playlist::data(const QModelIndex &index, int role) const
 {
-    QVariant dat;
+    QVariant dat = *play->invalid;
     playlist* play = (playlist *)index.model();
     if(play->existAt(index.row()))
     {
         if (!index.isValid())
-            return QVariant();
+            return *play->invalid;
         if (role == Qt::TextAlignmentRole) {
             return int(Qt::AlignLeft | Qt::AlignVCenter);
         } else if (role == Qt::DecorationRole) {
@@ -30,10 +31,10 @@ QVariant playlist::data(const QModelIndex &index, int role) const
                 if(play->currentplaying()==index.row())
                     dat = QVariant(*play->icon);
                 else
-                    dat = QVariant();
+                    dat = *play->invalid;
                 break;
             default:
-                dat = QVariant();
+                dat = *play->invalid;
             }
         } else if (role == Qt::ForegroundRole) {
             switch(index.column())
@@ -42,10 +43,10 @@ QVariant playlist::data(const QModelIndex &index, int role) const
                 if(!play->pList->at(index.row())->downloaded)
                     dat = QVariant(Qt::gray);
                 else
-                    dat = QVariant();
+                    dat = *play->invalid;
                 break;
             default:
-                dat = QVariant();
+                dat = *play->invalid;
             }
         } else if (role == Qt::DisplayRole) {
             switch(index.column())
@@ -72,13 +73,13 @@ QVariant playlist::data(const QModelIndex &index, int role) const
                 dat = QVariant(play->pList->at(index.row())->played);
                 break;
             default:
-                dat = QVariant();
+                dat = *play->invalid;
             }
         } else
-            dat = QVariant();
+            dat = *play->invalid;
     }
     else
-        dat = QVariant();
+        dat = *play->invalid;
     return dat;
 }
 int playlist::rowCount(const QModelIndex &) const

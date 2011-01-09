@@ -108,6 +108,7 @@ private:
     gscom *gs;
     QTime startStreamT;
     QIcon *icon;
+    QVariant *invalid;
 };
 
 #endif // PLAYLIST_H
