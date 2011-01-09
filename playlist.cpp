@@ -30,7 +30,8 @@ QVariant playlist::data(const QModelIndex &index, int role) const
             {
             case sName:
                 if(play->currentplaying()==index.row())
-                    dat = *play->icon;
+                    //dat = *play->icon;
+                    dat = *play->invalid;
                 else
                     dat = *play->invalid;
                 break;
