@@ -16,8 +16,9 @@ playlist::playlist(QObject *parent) :
 //Implemented model class information
 QVariant playlist::data(const QModelIndex &index, int role) const
 {
-    QVariant dat = *play->invalid;
+
     playlist* play = (playlist *)index.model();
+    QVariant dat = *play->invalid;
     if(play->existAt(index.row()))
     {
         if (!index.isValid())
