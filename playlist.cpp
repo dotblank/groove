@@ -18,7 +18,7 @@ QVariant playlist::data(const QModelIndex &index, int role) const
 {
 
     playlist* play = (playlist *)index.model();
-    QVariant dat = *play->invalid;
+    /*QVariant dat = *play->invalid;
     if(play->existAt(index.row()))
     {
         if (!index.isValid())
@@ -82,7 +82,8 @@ QVariant playlist::data(const QModelIndex &index, int role) const
     }
     else
         dat = *play->invalid;
-    return dat;
+    return dat;*/
+    return *play->invalid;
 }
 int playlist::rowCount(const QModelIndex &) const
 {
