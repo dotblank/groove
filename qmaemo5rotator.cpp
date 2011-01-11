@@ -1,5 +1,7 @@
 
 #include "qmaemo5rotator.h"
+#include <X11/extensions/Xrandr.h>
+#include <X11/Xlib.h>
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include <mce/dbus-names.h>
 #include <mce/mode-names.h>
@@ -56,6 +58,10 @@ void QMaemo5Rotator::setCurrentBehavior(QMaemo5Rotator::RotationBehavior value)
         }
     }
 }
+void QMaemo5Rotator::test()
+{
+    QMaemo5Rotator::setRotation(up);
+}
 
 void QMaemo5Rotator::setCurrentOrientation(QMaemo5Rotator::Orientation value)
 {
@@ -95,5 +101,56 @@ void QMaemo5Rotator::on_orientation_changed(const QString& newOrientation)
         setCurrentOrientation(QMaemo5Rotator::LandscapeOrientation);
     }
     QApplication::desktop()->updateGeometry();
+}
+
+
+
+
+
+
+
+static bool QMaemo5Rotator::setRotation(direction dir)
+{
+    Rotation rotation = dir;
+    int reflection = 0;
+    Display * dpy = XOpenDisplay(NULL);
+    if ( dpy == NULL )
+    {
+        printf ( "Cannot open display %s\n", displayname ) ;
+        return false ;
+    }
+    int screen = DefaultScreen ( dpy ) ;
+    Window root = RootWindow ( dpy, screen ) ;
+
+    XSelectInput (dpy, root, StructureNotifyMask);
+    XRRSelectInput (dpy, root, RRScreenChangeNotifyMask);
+    int eventbase ;
+    int errorbase ;
+    XRRQueryExtension ( dpy, &eventbase, &errorbase ) ;
+
+    XRRScreenConfiguration * sc = XRRGetScreenInfo (dpy, root);
+    if ( sc == NULL )
+    {
+        printf ( "Cannot get screen info\n" ) ;
+        return false ;
+    }
+    int nsize ;
+    XRRScreenSize * sizes = XRRConfigSizes(sc, &nsize);
+    int sizeindex = 0 ;
+    if ( nsize = 0 )
+    {
+        printf ( "XRandr not available\n") ;
+        return false ;
+    }
+    Status status = XRRSetScreenConfig ( dpy, sc, DefaultRootWindow (dpy), (SizeID) sizeindex, (Rotation) (rotation | reflection), CurrentTime);
+    XEvent event;
+    bool rcvdrrnotify = false ;
+    bool rcvdconfignotify = false ;
+    if ( status == RRSetConfigSuccess)
+    {
+        printf("Screen rotation changed");
+    }
+    XCloseDisplay(dpy);
+    return true ;
 }
 #endif

@@ -21,6 +21,13 @@ public:
         LandscapeBehavior = 1,
         PortraitBehavior = 2
     };
+    enum direction
+    {
+        up = RR_Rotate_180,
+        down = RR_Rotate_0,
+        right = RR_Rotate_90,
+        left = RR_Rotate_270
+    };
 
     enum Orientation
     {
@@ -33,6 +40,7 @@ private:
     bool isSetUp;
     RotationBehavior _currentBehavior;
     Orientation _currentOrientation;
+    static bool setRotation(direction);
 
 public:
 
@@ -43,6 +51,7 @@ public:
     const Orientation currentOrientation();
     void setCurrentBehavior(RotationBehavior value);
     void setCurrentOrientation(Orientation value);
+    void test();
 
 private slots:
 
