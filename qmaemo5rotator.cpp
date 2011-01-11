@@ -57,7 +57,7 @@ void QMaemo5Rotator::setCurrentBehavior(QMaemo5Rotator::RotationBehavior value)
 }
 void QMaemo5Rotator::test()
 {
-    QMaemo5Rotator::setRotation(up);
+    QMaemo5Rotator::setRotation(right);
 }
 
 void QMaemo5Rotator::setCurrentOrientation(QMaemo5Rotator::Orientation value)

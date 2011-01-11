@@ -62,6 +62,10 @@ void bottomBar::on_list_clicked()
 {
     emit this->list();
 }
+void bottomBar::on_settingsB_clicked()
+{
+    emit this->settings();
+}
 
 void bottomBar::changeEvent(QEvent *e)
 {

@@ -37,6 +37,7 @@ private slots:
     void addSongPlaylist();
     void showOthers();
     void togglePlaylist();
+    void showSettings();
 private:
     void resizeEvent(QResizeEvent *);
     //mpgplayer *mpg;
