@@ -1,4 +1,3 @@
-
 #include "qmaemo5rotator.h"
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include <mce/dbus-names.h>
@@ -100,13 +99,6 @@ void QMaemo5Rotator::on_orientation_changed(const QString& newOrientation)
     }
     QApplication::desktop()->updateGeometry();
 }
-
-
-
-
-
-
-
 static bool QMaemo5Rotator::setRotation(direction dir)
 {
     Rotation rotation = dir;
