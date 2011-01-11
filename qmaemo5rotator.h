@@ -42,7 +42,7 @@ private:
     bool isSetUp;
     RotationBehavior _currentBehavior;
     Orientation _currentOrientation;
-    static bool setRotation(direction);
+    bool setRotation(direction);
 
 public:
 

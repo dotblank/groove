@@ -99,7 +99,7 @@ void QMaemo5Rotator::on_orientation_changed(const QString& newOrientation)
     }
     QApplication::desktop()->updateGeometry();
 }
-static bool QMaemo5Rotator::setRotation(direction dir)
+bool QMaemo5Rotator::setRotation(direction dir)
 {
     Rotation rotation = dir;
     int reflection = 0;
