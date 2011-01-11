@@ -106,7 +106,7 @@ static bool QMaemo5Rotator::setRotation(direction dir)
     Display * dpy = XOpenDisplay(NULL);
     if ( dpy == NULL )
     {
-        printf ( "Cannot open display %s\n", displayname ) ;
+        printf ( "Cannot open display" ) ;
         return false ;
     }
     int screen = DefaultScreen ( dpy ) ;
