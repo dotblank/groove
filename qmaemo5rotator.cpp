@@ -1,7 +1,5 @@
 
 #include "qmaemo5rotator.h"
-#include <X11/extensions/Xrandr.h>
-#include <X11/Xlib.h>
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
 #include <mce/dbus-names.h>
 #include <mce/mode-names.h>

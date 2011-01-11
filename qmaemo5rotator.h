@@ -4,6 +4,7 @@
 // Provides a means of WORKING automatic rotation for Maemo 5 apps. (The default Qt solution is buggy.)
 //----------
 #include <X11/extensions/Xrandr.h>
+#include <X11/Xlib.h>
 #include <Qt>
 #include <QtGui>
 #include <QtCore>
