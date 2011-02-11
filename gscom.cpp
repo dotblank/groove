@@ -258,7 +258,7 @@ void gscom::replyFinished(QNetworkReply *reply)
                               << "Song Id");
 
 
-            foreach (QVariant plugin, result["result"].toList()) {
+            foreach (QVariant plugin, result["result"].toMap()["Songs"].toList()) {
               QList<QStandardItem *> items;
               QVariantMap nestedMap = plugin.toMap();
               items.append(new QStandardItem(nestedMap["Name"].toString()));
