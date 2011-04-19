@@ -12,6 +12,9 @@
 #include "topbar.h"
 #include "vkb.h"
 #include "bottombar.h"
+#include "settings.h"
+#include <QSettings>
+
 //#include "mpgplayer.h"
 #include "pwin.h"
 
@@ -43,6 +46,7 @@ private:
     //mpgplayer *mpg;
     bottomBar *bBar;
     sPlayer *player;
+    settings *settingsWin;
     QMenuBar *mBar;
     QPushButton *sMethod;
     QStandardItemModel *model;

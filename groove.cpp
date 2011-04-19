@@ -14,6 +14,7 @@ groove::groove(QWidget *parent) :
     //mBar->addAction("test");
     sMethod = new QPushButton("Song:");
     lineEdit = new QLineEdit("");
+    settingsWin = new settings();
     player = new sPlayer();
     QHBoxLayout *layout = new QHBoxLayout();
     QVBoxLayout *vlayout = new QVBoxLayout();
@@ -112,9 +113,10 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(addB()),this,SLOT(addSongPlaylist()));
     connect(bBar,SIGNAL(nextB()),player,SLOT(playNext()));
     connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
+    connect(bBar,SIGNAL(settings()),settingsWin,SLOT(show()));
 
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
-    connect(bBar,SIGNAL(settings()),this,SLOT(showSettings()));
+    connect(bBar,SIGNAL(settings()),settingsWin,SLOT(show()));
     bBar->setPlaybackProgress(100,100);
     pwindow = new pWin();
     stack->addWidget(pwindow);

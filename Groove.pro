@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     bottombar.cpp \
     vkb.cpp \
     searchresults.cpp \
-    pwin.cpp
+    pwin.cpp \
+    settings.cpp
 ##  mpgplayer.cpp
 
 HEADERS += \
@@ -49,7 +50,8 @@ HEADERS += \
     bottombar.h \
     vkb.h \
     searchresults.h \
-    pwin.h
+    pwin.h \
+    settings.h
 ##    mpgplayer.h
 
 maemo5 {
@@ -104,4 +106,5 @@ FORMS += \
     bottombar.ui \
     vkb.ui \
     searchresults.ui \
-    pwin.ui
+    pwin.ui \
+    settings.ui
