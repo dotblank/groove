@@ -8,7 +8,7 @@
 #include <QList>
 #include <QSignalMapper>
 #include <gscom.h>
-class playlist : public QObject
+class playlist : public QAbstractTableModel
 {
     Q_OBJECT
 public:
@@ -23,8 +23,25 @@ public:
         Aborted = 1,
         Other =2
     };
+    //this Enum MUST BE sequantial
+    //And when changed must update the length
+#define PLAYLISTENUMS 9
+    enum coulmnStruct
+    {
+        sPlaying,
+        sName,
+        sID,
+        sKey,
+        sURL,
+        sBuff,
+        sDownloaded,
+        sPlayed,
+        sReady
+    };
+
     struct songElement
     {
+        QString *name;
         QString *songId;
         QString *streamkey;
         QUrl *server;
@@ -37,8 +54,7 @@ public:
     };
     QList<songElement *>* getList();
     explicit playlist(QObject *parent = 0);
-    int addSong(QStandardItem *item);
-    QList<QStandardItem *> getPlaylist();
+    int addSong(QStandardItem *item,QString name);
     void removeSong(int position);
     void getSong(int position);
     QIODevice * getBuffer(int position);
@@ -54,12 +70,19 @@ public:
     void beginDownload(int position);
     bool existAt(int position);
 
+    //Implemented virtual classes for Model View
+    QVariant data(const QModelIndex &index, int role) const;
+    int columnCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex &parent) const;
+
 signals:
     void downloadProgress(int position, qint64 d, qint64 t);
     void bufferReady(int position);
     void sFailure(int position,failType);
     void downloadComplete(int position);
     void freeze(bool);
+    //void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    void rowsInserted ( const QModelIndex & parent, int start, int end );
 
 public slots:
 private slots:
@@ -84,6 +107,8 @@ private:
     int currentdownloaditem;
     gscom *gs;
     QTime startStreamT;
+    QVariant *icon;
+    QVariant *invalid;
 };
 
 #endif // PLAYLIST_H

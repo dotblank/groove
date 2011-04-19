@@ -10,17 +10,23 @@ bottomBar::bottomBar(QWidget *parent) :
     main = new QGraphicsScene(0,0,this->width(),15);
     ui->graphicsView->setScene(main);
     ui->graphicsView->setSceneRect(0,0,this->width(),15);
-    //ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
+    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop);
     main->setBackgroundBrush(this->palette().window());
     main->setSceneRect(0,0,this->width(),15);
-    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white));
+    ui->verticalLayout->setContentsMargins(QMargins());
+    //ui->verticalLayout->setSpacing(0);
+
 #ifndef Q_WS_MAEMO_5
+    QBrush k = QApplication::palette().highlight();
+    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(k.color()),QBrush(k));
     ui->stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
     ui->pauseB->setIcon(QIcon::fromTheme("media-playback-pause"));
     ui->nextB->setIcon(QIcon::fromTheme("media-skip-forward"));
     ui->backB->setIcon(QIcon::fromTheme("media-skip-backward"));
     ui->settingsB->setIcon(QIcon::fromTheme("document-properties"));
-
+#else
+    this->playbackProgress = main->addRect(0,0,this->width()/2,15,QPen(Qt::white),QBrush(Qt::white));
 #endif
 }
 
@@ -51,6 +57,14 @@ void bottomBar::on_addButton_clicked()
 void bottomBar::on_backB_clicked()
 {
     emit this->back();
+}
+void bottomBar::on_list_clicked()
+{
+    emit this->list();
+}
+void bottomBar::on_settingsB_clicked()
+{
+    emit this->settings();
 }
 
 void bottomBar::changeEvent(QEvent *e)

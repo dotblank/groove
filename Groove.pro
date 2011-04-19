@@ -15,7 +15,7 @@ INCLUDEPATH += /usr/include/qjson /usr/include
 #INCLUDEPATH += ../qjson/src/
 #INCLUDEPATH += ./src/
 #LIBS += -L/usr/lib -lqjson ##Desktop Target
-LIBS += -L/usr/local/lib -lqjson ##Armel Target
+LIBS += -L/usr/local/lib -lqjson -lXrandr ##Armel Target
 #LIBS += -L~/NokiaQtSDK/Maemo/4.6.2/sysroots/fremantle-arm-sysroot-1014-slim/usr/lib -lqjson ##Armel Target SDK
 #LIBS += -L../qjson/lib -lqjson ##X86 maemo
 QT += network
@@ -34,8 +34,8 @@ SOURCES += main.cpp \
     bottombar.cpp \
     vkb.cpp \
     searchresults.cpp \
+    pwin.cpp
 ##  mpgplayer.cpp
-    plistwin.cpp
 
 HEADERS += \
     groove.h \
@@ -49,8 +49,8 @@ HEADERS += \
     bottombar.h \
     vkb.h \
     searchresults.h \
+    pwin.h
 ##    mpgplayer.h
-    plistwin.h
 
 maemo5 {
 SOURCES += qmaemo5rotator.cpp
@@ -73,7 +73,9 @@ OTHER_FILES += \
     camera_video_stop.png \
     camera_video_pause.png \
     camera_camera_setting.png \
-    wmTaskModified.png
+    wmTaskModified.png \
+    general_up.png \
+    general_down.png
 unix {
   PREFIX = /usr
   BINDIR = $$PREFIX/bin
@@ -101,4 +103,5 @@ FORMS += \
     topbar.ui \
     bottombar.ui \
     vkb.ui \
-    searchresults.ui
+    searchresults.ui \
+    pwin.ui

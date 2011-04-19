@@ -24,6 +24,8 @@ signals:
     void nextB();
     void pause();
     void back();
+    void list();
+    void settings();
 protected:
     void changeEvent(QEvent *e);
 private slots:
@@ -31,6 +33,8 @@ private slots:
     void on_nextB_clicked();
     void on_pauseB_clicked();
     void on_backB_clicked();
+    void on_list_clicked();
+    void on_settingsB_clicked();
 
 
 private:

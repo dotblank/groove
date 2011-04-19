@@ -1,7 +1,7 @@
 #include "playlist.h"
 
 playlist::playlist(QObject *parent) :
-    QObject(parent)
+    QAbstractTableModel(parent)
 {
    manager = new QNetworkAccessManager();
    this->currentdownloaditem = -1;
@@ -9,7 +9,92 @@ playlist::playlist(QObject *parent) :
    this->currentplayingitem = -1;
    this->currentSkeyItem = -1;
    this->reply = NULL;
+   invalid = new QVariant();
+   icon = new QVariant(QIcon(":/groove/icons/general_forward.png"));
 }
+
+//Implemented model class information
+QVariant playlist::data(const QModelIndex &index, int role) const
+{
+
+    playlist* play = (playlist *)index.model();
+    /*QVariant dat = *play->invalid;
+    if(play->existAt(index.row()))
+    {
+        if (!index.isValid())
+            return *play->invalid;
+        if (role == Qt::TextAlignmentRole) {
+            return int(Qt::AlignLeft | Qt::AlignVCenter);
+        } else if (role == Qt::DecorationRole) {
+            switch(index.column())
+            {
+            case sName:
+                if(play->currentplaying()==index.row())
+                    //dat = *play->icon;
+                    dat = *play->invalid;
+                else
+                    dat = *play->invalid;
+                break;
+            default:
+                dat = *play->invalid;
+            }
+        } else if (role == Qt::ForegroundRole) {
+            switch(index.column())
+            {
+            case sName:
+                if(!play->pList->at(index.row())->downloaded)
+                    dat = QVariant(Qt::gray);
+                else
+                    dat = *play->invalid;
+                break;
+            default:
+                dat = *play->invalid;
+            }
+        } else if (role == Qt::DisplayRole) {
+            switch(index.column())
+            {
+            case sName:
+                dat = QVariant(*play->pList->at(index.row())->name);
+                break;
+            case sID:
+                dat = QVariant(*play->pList->at(index.row())->songId);
+                break;
+            case sKey:
+                dat = QVariant(*play->pList->at(index.row())->streamkey);
+                break;
+            case sDownloaded:
+                dat = QVariant(play->pList->at(index.row())->downloaded);
+                break;
+            case sReady:
+                dat = QVariant(play->pList->at(index.row())->bufferready);
+                break;
+            case sURL:
+                dat = QVariant(play->pList->at(index.row())->server->toString());
+                break;
+            case sPlayed:
+                dat = QVariant(play->pList->at(index.row())->played);
+                break;
+            default:
+                dat = *play->invalid;
+            }
+        } else
+            dat = *play->invalid;
+    }
+    else
+        dat = *play->invalid;
+    return dat;*/
+    return *play->invalid;
+}
+int playlist::rowCount(const QModelIndex &) const
+{
+    return pList->size();
+}
+int playlist::columnCount(const QModelIndex &) const
+{
+    return PLAYLISTENUMS;
+}
+
+
 QList<playlist::songElement *>* playlist::getList()
 {
     return pList;
@@ -131,9 +216,10 @@ void playlist::skeyFound()
     this->currentSkeyItem = -1;
 }
 
-int playlist::addSong(QStandardItem *item)
+int playlist::addSong(QStandardItem *item, QString name)
 {
     playlist::songElement *newelement = new playlist::songElement;
+    newelement->name = new QString(name);
     newelement->buffer = new QBuffer();
     newelement->downloaded =false;
     newelement->songId = new QString(item->text());
@@ -144,7 +230,7 @@ int playlist::addSong(QStandardItem *item)
     newelement->type = playlist::EStream;
     pList->append(newelement);
     gs->getSong(item->text());
-
+    emit this->rowsInserted(QModelIndex(),pList->size(),pList->size());
     this->currentSkeyItem = pList->size()-1;
     emit this->freeze(true);
     return pList->size()-1;

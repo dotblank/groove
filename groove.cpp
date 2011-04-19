@@ -17,7 +17,7 @@ groove::groove(QWidget *parent) :
     player = new sPlayer();
     QHBoxLayout *layout = new QHBoxLayout();
     QVBoxLayout *vlayout = new QVBoxLayout();
-    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    //QHBoxLayout *bottomLayout = new QHBoxLayout();
     button = new QPushButton("Search");
     QPushButton *dButton = new QPushButton("Queue");
     QPushButton *stopButton = new QPushButton("Pause");
@@ -66,19 +66,24 @@ groove::groove(QWidget *parent) :
     //this->setAttribute(Qt::WA_Maemo5AutoOrientation);
     layout->addWidget(lineEdit);
     layout->addWidget(button);
+    vlayout->setContentsMargins(QMargins(0,0,0,0));
+    //vlayout->setMargin(0);
+    vlayout->setSpacing(0);
     vlayout->addWidget(ok);
     //vlayout->addLayout(layout);
-    vlayout->addWidget(resultView);
+    stack = new QStackedWidget();
+    stack->addWidget(resultView);
+
+    vlayout->addWidget(stack);
     //vlayout->addLayout(bottomLayout);
     bBar = new bottomBar();
     vlayout->addWidget(bBar);
-    vlayout->setSpacing(0);
-    bottomLayout->addWidget(dButton);
+
+    /*bottomLayout->addWidget(dButton);
     bottomLayout->addWidget(stopButton);
     bottomLayout->addWidget(nextB);
-    bottomLayout->addWidget(moreButton);
+    bottomLayout->addWidget(moreButton);*/
     vlayout->setMenuBar(mBar);
-    vlayout->setContentsMargins(QMargins());
     setLayout(vlayout);
     setWindowTitle("Groove");
     //Create New Grooveshark connection
@@ -109,15 +114,34 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(pause()),this,SLOT(stop()));
 
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
+    connect(bBar,SIGNAL(settings()),this,SLOT(showSettings()));
     bBar->setPlaybackProgress(100,100);
-    //pwindow = new pListWin(0);
-    //pwindow->show();
+    pwindow = new pWin();
+    stack->addWidget(pwindow);
+    stack->setCurrentWidget(resultView);
+    connect(bBar,SIGNAL(list()),this,SLOT(togglePlaylist()));
+    pwindow->setModel(pl);
 
 }
+void groove::showSettings(){
+#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
+    rot->test();
+#endif
+}
+
+void groove::togglePlaylist()
+{
+    if(stack->currentWidget()==pwindow)
+        stack->setCurrentWidget(resultView);
+    else
+        stack->setCurrentWidget(pwindow);
+}
+
 void groove::performSearch(QString s)
 {
     qDebug() << s;
     resultView->setModel(gs->getSongModel(s));
+    this->stack->setCurrentWidget(this->resultView);
 }
 
 void groove::search()
@@ -155,8 +179,8 @@ void groove::finishedS()
     model = gs->getModel();
     resultView->setModel(model);
     button->setText("Search");
-    resultView->setColumnWidth(0,resultView->viewport()->width()/2);
-    resultView->setColumnWidth(1,resultView->viewport()->width()/2);
+    resultView->setColumnWidth(0,resultView->maximumViewportSize().width()/2);
+    resultView->setColumnWidth(1,resultView->maximumViewportSize().width()/2);
     lineEdit->setDisabled(false);
     resultView->setColumnHidden(2,true);
 }
@@ -185,7 +209,7 @@ void groove::play()
         if(item == 0)
             return;
         //gs->getSong();
-        player->play(pl->addSong(item));
+        player->play(pl->addSong(item,model->item(selected.first().row(),0)->text()));
     }
     //selected.
     //if
@@ -201,13 +225,14 @@ void groove::addSongPlaylist()
         //gs->getSong();
         if(pl->currentplaying() == -1)
         {
-            player->play(pl->addSong(item));
+            player->play(pl->addSong(item,model->item(selected.first().row(),0)->text()));
         }
         else
-            pl->addSong(item);
+            pl->addSong(item,model->item(selected.first().row(),0)->text());
         model->item(selected.first().row(),1)->setText("Added to Playlist");;
+        //pwindow->addSong(model->item(selected.first().row(),0)->text());
     }
-    //pwindow->updateList();
+
 }
 
 void groove::stop()
@@ -225,6 +250,16 @@ void groove::progressUpdate(int p, qint64 d, qint64 t)
     //{
     bBar->setPlaybackProgress(d,t);
     //}
+}
+void groove::resizeEvent(QResizeEvent *)
+{
+    if(resultView->isColumnHidden(2))
+    {
+    resultView->setColumnWidth(0,resultView->maximumViewportSize().width()/2);
+    resultView->setColumnWidth(1,resultView->maximumViewportSize().width()/2);
+    }
+    else
+        resultView->setColumnWidth(0,resultView->maximumViewportSize().width());
 }
 
 void groove::orientationChanged()
