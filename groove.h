@@ -40,6 +40,7 @@ private slots:
     void addSongPlaylist();
     void showOthers();
     void togglePlaylist();
+    void toggleSettings();
     void showSettings();
 private:
     void resizeEvent(QResizeEvent *);

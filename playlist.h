@@ -52,6 +52,7 @@ public:
         bool played;
         bool bufferready;
     };
+    int prefetch;
     QList<songElement *>* getList();
     explicit playlist(QObject *parent = 0);
     int addSong(QStandardItem *item,QString name);
@@ -85,6 +86,7 @@ signals:
     void rowsInserted ( const QModelIndex & parent, int start, int end );
 
 public slots:
+    void setSettings(QString key, QVariant Val);
 private slots:
     void downloadSlot(qint64 d, qint64 t);
     void networkReplyFinish();
@@ -93,11 +95,6 @@ private slots:
     void setBufferRdy(int b);
     void getNError(QNetworkReply::NetworkError);
 private:
-
-
-
-
-
     int currentplayingitem;
     int currentSkeyItem;
     QList<songElement *> *pList;
@@ -109,6 +106,8 @@ private:
     QTime startStreamT;
     QVariant *icon;
     QVariant *invalid;
+    double bufferpcnt;
+
 };
 
 #endif // PLAYLIST_H

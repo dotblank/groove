@@ -116,19 +116,31 @@ groove::groove(QWidget *parent) :
     connect(bBar,SIGNAL(settings()),settingsWin,SLOT(show()));
 
     connect(bBar,SIGNAL(back()),player,SLOT(back()));
-    connect(bBar,SIGNAL(settings()),settingsWin,SLOT(show()));
+    stack->addWidget(settingsWin);
+    connect(bBar,SIGNAL(settings()),this,SLOT(toggleSettings()));
+    connect(settingsWin,SIGNAL(closed()),this,SLOT(toggleSettings()));
     bBar->setPlaybackProgress(100,100);
     pwindow = new pWin();
     stack->addWidget(pwindow);
     stack->setCurrentWidget(resultView);
     connect(bBar,SIGNAL(list()),this,SLOT(togglePlaylist()));
     pwindow->setModel(pl);
+    connect(settingsWin,SIGNAL(settingsChange(QString,QVariant)),pl,SLOT(setSettings(QString,QVariant)));
+    settingsWin->populate();
 
 }
 void groove::showSettings(){
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
     rot->test();
 #endif
+}
+
+void groove::toggleSettings()
+{
+    if(stack->currentWidget()==settingsWin)
+        stack->setCurrentWidget(resultView);
+    else
+        stack->setCurrentWidget(settingsWin);
 }
 
 void groove::togglePlaylist()

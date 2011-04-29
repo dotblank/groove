@@ -11,6 +11,8 @@ playlist::playlist(QObject *parent) :
    this->reply = NULL;
    invalid = new QVariant();
    icon = new QVariant(QIcon(":/groove/icons/general_forward.png"));
+   this->bufferpcnt = 0.05;
+   this->prefetch = 3;
 }
 
 //Implemented model class information
@@ -18,7 +20,7 @@ QVariant playlist::data(const QModelIndex &index, int role) const
 {
 
     playlist* play = (playlist *)index.model();
-    /*QVariant dat = *play->invalid;
+    QVariant dat = *play->invalid;
     if(play->existAt(index.row()))
     {
         if (!index.isValid())
@@ -82,8 +84,8 @@ QVariant playlist::data(const QModelIndex &index, int role) const
     }
     else
         dat = *play->invalid;
-    return dat;*/
-    return *play->invalid;
+    return dat;
+    //return *play->invalid;
 }
 int playlist::rowCount(const QModelIndex &) const
 {
@@ -143,7 +145,20 @@ void playlist::setCurrentPlaying(int position)
     {
         this->currentplayingitem = position;
         if(!pList->at(position)->downloaded && this->currentdownloaditem != this->currentplayingitem)
+        {
             this->beginDownload(position);
+        }
+        else
+        {
+            for(int i = 0; i < prefetch;i++)
+            {
+                if(this->existAt(position+1+i) && !pList->at(position+1+i)->downloaded)
+                {
+                    this->beginDownload(position+1+i);
+                    continue;
+                }
+            }
+        }
         /*if(pList->at(position)->bufferready == false &&)
         {
             if(!pList->at(position)->downloaded)
@@ -167,6 +182,24 @@ void playlist::setCurrentPlaying(int position)
 QIODevice * playlist::getBuffer(int position)
 {
     return pList->at(position)->buffer;
+}
+void playlist::setSettings(QString key, QVariant Val)
+{
+    if(key=="buffer-pcnt")
+        this->bufferpcnt = Val.toInt()/100.0;
+    if(key=="playlist-precache")
+    {
+        this->prefetch = Val.toInt();
+        //when we change precahce never delete and make sure the setting takes effect
+        if(this->currentdownloaditem!=this->currentplayingitem)
+            for(int i = 0; i < this->prefetch;i++)
+                if(this->existAt(this->currentplayingitem+1+i) && !pList->at(this->currentplayingitem+1+i)->downloaded)
+                {
+                    this->beginDownload(this->currentplayingitem+1+i);
+                    continue;
+                }
+    }
+
 }
 
 void playlist::beginDownload(int position)
@@ -239,10 +272,15 @@ int playlist::addSong(QStandardItem *item, QString name)
 void playlist::downloadDone(int position)
 {
     if(this->existAt(position+1) && this->currentSkeyItem == -1 && !pList->at(position+1)->downloaded && this->currentdownloaditem != position+1)
-        beginDownload(position+1);
+    {
+        if(((position+1) - this->currentplaying())<=this->prefetch)
+            beginDownload(position+1);
+    }
     else
         this->currentdownloaditem = -1;
     pList->at(position)->downloaded = true;
+    QModelIndex changed = this->createIndex(position,this->sName,0);
+    emit this->dataChanged(changed,changed);
 }
 void playlist::networkReplyFinish()
 {
@@ -277,7 +315,7 @@ void playlist::downloadSlot(qint64 b, qint64 t)
         {
             pList->at(this->currentdownloaditem)->buffer->buffer().append(reply->readAll());
             //qDebug() << !pList->at(this->currentdownloaditem)->bufferready << this->currentdownloaditem;
-            if ( b >= t*0.05 && !pList->at(this->currentdownloaditem)->bufferready)
+            if ( b >= t*bufferpcnt && !pList->at(this->currentdownloaditem)->bufferready)
                 //if(!pList->at(currentdownloaditem)->bufferready && b/(startStreamT.msecsTo(QTime::currentTime()) + 1)*100/1024 >= 10)
             {
                 this->setBufferRdy(this->currentdownloaditem);

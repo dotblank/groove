@@ -2,13 +2,17 @@
 #include <parser.h>
 #include <serializer.h>
 #include <QCryptographicHash>
+#include <QTimer>
+
 //#include <QApplication>
-#define CVERSION "20100831"
+//#define CVERSION "20100831"
+#define CVERSION "20101222"
 #define CLIENT "htmlshark"
 
 gscom::gscom()
 {
     manager = new QNetworkAccessManager(this);
+    QTimer *timer = new QTimer(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
     cookies = manager->cookieJar();
@@ -21,6 +25,8 @@ gscom::gscom()
     model->setHorizontalHeaderLabels(
         QStringList() << "Online");
     addDebugMsg("You may now search for a song");
+    connect(timer,SIGNAL(timeout()),this,SLOT(refreshsession()));
+    timer->start(60000); //default to one min
     //addProgressbar("test");
     //getSessionKey();
 }
@@ -42,7 +48,7 @@ QStandardItemModel* gscom::getSongModel(QString song)
         QString *token = getToken(getSearchResults);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getSearchResults"));
+        request.setUrl(QUrl("http://grooveshark.com/more.php?getSearchResults"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
@@ -84,7 +90,7 @@ QStandardItemModel* gscom::getArtistModel(QString song)
         QString *token = getToken(getSearchResults);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getSearchResults"));
+        request.setUrl(QUrl("http://grooveshark.com/more.php?getSearchResults"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
@@ -147,6 +153,15 @@ QStandardItemModel* gscom::getAlbumModel(QString song)
 
     return model;
 }
+void gscom::refreshsession()
+{
+    if(this->currentaction==none)
+    {
+        currentaction=refresh;
+        manager->get(QNetworkRequest(QUrl(GS_KEEPALIVE)));
+    }
+}
+
 void gscom::replyFinished(QNetworkReply *reply)
 {
     switch (currentaction)
@@ -237,7 +252,9 @@ void gscom::replyFinished(QNetworkReply *reply)
         {
             QJson::Parser parser;
             bool ok;
-            QVariantMap result = parser.parse (reply->readAll(), &ok).toMap();
+            QByteArray array = reply->readAll();
+            //qDebug(array);
+            QVariantMap result = parser.parse (array, &ok).toMap();
             if (!ok) {
               qFatal("An error occurred during parsing");
               return;
@@ -269,6 +286,33 @@ void gscom::replyFinished(QNetworkReply *reply)
             currentaction = none;
             reply->close();
             emit finishedSearch();
+        }
+        break;
+    case refresh:
+        {
+            qDebug() << "Got refresh reply";
+            reply->readAll();
+            reply->close();
+            currentaction = none;
+            /*
+            QList<QNetworkCookie> cookieList = cookies->cookiesForUrl(QUrl(QString("http://") + GS_LISTEN));
+            foreach(QNetworkCookie cookie, cookieList)
+            {
+                if(cookie.name() == "PHPSESSID")
+                {
+                    if(phpSession!=cookie.value())
+                    {
+                    delete phpSession;
+                    phpSession = new QString(cookie.value());
+                    qDebug() << QDateTime::currentDateTime();
+                    qDebug() << cookie.expirationDate();
+                    currentaction = getCommunicationToken;
+                    getSessionKey();
+                    continue;
+                    }
+                }
+            }
+            */
         }
         break;
     default:
@@ -364,7 +408,7 @@ void gscom::getSong(QString songid)
         QString *token = getToken(getStreamKeyFromSongIDEx);
         qDebug() << token->toAscii();
         QNetworkRequest request;
-        request.setUrl(QUrl("http://listen.grooveshark.com/more.php?getStreamKeyFromSongIDEx"));
+        request.setUrl(QUrl("http://grooveshark.com/more.php?getStreamKeyFromSongIDEx"));
         request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
         QVariantMap jlist;
         QVariantMap header;
@@ -399,7 +443,8 @@ void gscom::getSong(QString songid)
 void gscom::getSessionKey()
 {
     QNetworkRequest request; // = new QNetworkRequest(QUrl("https://listen.grooveshark.com/service.php"));
-    request.setUrl(QUrl("https://listen.grooveshark.com/more.php"));
+    //request.setUrl(QUrl("https://listen.grooveshark.com/more.php"));
+    request.setUrl(QUrl("https://grooveshark.com/more.php?getCommunicationToken"));
     request.setHeader(request.ContentTypeHeader,QVariant("application/json"));
     QVariantMap jlist;
     QVariantMap header;
