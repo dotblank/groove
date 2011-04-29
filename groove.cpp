@@ -130,9 +130,6 @@ groove::groove(QWidget *parent) :
 
 }
 void groove::showSettings(){
-#if defined(Q_WS_MAEMO_5) || defined(Q_WS_HILDON)
-    rot->test();
-#endif
 }
 
 void groove::toggleSettings()
