@@ -42,7 +42,7 @@ private:
     bool isSetUp;
     RotationBehavior _currentBehavior;
     Orientation _currentOrientation;
-    bool setRotation(direction);
+    //bool setRotation(direction);
 
 public:
 
@@ -53,7 +53,7 @@ public:
     const Orientation currentOrientation();
     void setCurrentBehavior(RotationBehavior value);
     void setCurrentOrientation(Orientation value);
-    void test();
+    //void test();
 
 private slots:
 

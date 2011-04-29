@@ -55,10 +55,11 @@ void QMaemo5Rotator::setCurrentBehavior(QMaemo5Rotator::RotationBehavior value)
         }
     }
 }
+/*
 void QMaemo5Rotator::test()
 {
     QMaemo5Rotator::setRotation(right);
-}
+}*/
 
 void QMaemo5Rotator::setCurrentOrientation(QMaemo5Rotator::Orientation value)
 {
@@ -99,6 +100,7 @@ void QMaemo5Rotator::on_orientation_changed(const QString& newOrientation)
     }
     QApplication::desktop()->updateGeometry();
 }
+/*
 bool QMaemo5Rotator::setRotation(direction dir)
 {
     Rotation rotation = dir;
@@ -142,5 +144,5 @@ bool QMaemo5Rotator::setRotation(direction dir)
     }
     XCloseDisplay(dpy);
     return true ;
-}
+}*/
 #endif
